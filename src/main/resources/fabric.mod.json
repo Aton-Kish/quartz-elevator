@@ -1,30 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "quartzelv",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
-  "authors": [
-    "Me!"
-  ],
+  "name": "Quartz Elevator",
+  "description": "Adds quartz elevators.",
+  "authors": ["Aton-Kish"],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Aton-Kish/quartz-elevator",
+    "sources": "https://github.com/Aton-Kish/quartz-elevator"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/quartzelv/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
-    ]
+    "main": ["atonkish.quartzelv.QuartzElevatorMod"]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
+  "mixins": ["quartzelv.mixins.json"],
 
   "depends": {
     "fabricloader": ">=0.7.4",
