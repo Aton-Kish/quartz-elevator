@@ -1,7 +1,7 @@
 # Quartz Elevator
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
-[![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=main)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:main)
+[![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=1.16.5)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:1.16.5)
 
 ## License
 
