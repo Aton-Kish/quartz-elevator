@@ -26,8 +26,13 @@ public class QuartzElevatorRegistry {
     /*
      * Quartz Elevator
      */
+    // Normal Quartz
     public static final QuartzElevatorBlock QUARTZ_ELEVATOR_BLOCK = registerQuartzElevator(createQuartzElevatorBlock(),
             "quartz_elevator");
+
+    // Smooth Quartz
+    public static final QuartzElevatorBlock SMOOTH_QUARTZ_ELEVATOR_BLOCK = registerQuartzElevator(
+            createQuartzElevatorBlock(), "smooth_quartz_elevator");
 
     /*
      * Finalized Item Group
