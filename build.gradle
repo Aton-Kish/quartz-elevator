@@ -1,3 +1,10 @@
+buildscript {
+    ext {
+        clothConfigVersion = '4.8.3'
+        autoConfig1uVersion = '3.3.1'
+    }
+}
+
 plugins {
     id 'fabric-loom' version '0.5-SNAPSHOT'
     id 'maven-publish'
@@ -21,6 +28,15 @@ dependencies {
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
+
+    // Auto Config:
+    // see https://shedaniel.gitbook.io/cloth-config/
+    modApi("me.shedaniel.cloth:config-2:${clothConfigVersion}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modApi("me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 processResources {
