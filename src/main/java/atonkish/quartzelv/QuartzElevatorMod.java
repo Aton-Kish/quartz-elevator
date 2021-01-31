@@ -3,35 +3,15 @@ package atonkish.quartzelv;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import atonkish.quartzelv.blocks.QuartzElevatorBlock;
+import atonkish.quartzelv.registry.QuartzElevatorRegistry;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class QuartzElevatorMod implements ModInitializer {
 	public static final String MOD_ID = "quartzelv";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static final QuartzElevatorBlock QUARTZ_ELEVATOR_BLOCK = new QuartzElevatorBlock(
-			FabricBlockSettings.copy(Blocks.QUARTZ_BLOCK));
-
-	public static final ItemGroup QUARTZ_ELEVATOR_ITEM_GROUP = FabricItemGroupBuilder
-			.create(new Identifier(MOD_ID, "item_group")).icon(() -> new ItemStack(QUARTZ_ELEVATOR_BLOCK))
-			.appendItems(stacks -> {
-				stacks.add(new ItemStack(QUARTZ_ELEVATOR_BLOCK));
-			}).build();
-
 	@Override
 	public void onInitialize() {
-		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "quartz_elevator"), QUARTZ_ELEVATOR_BLOCK);
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "quartz_elevator"),
-				new BlockItem(QUARTZ_ELEVATOR_BLOCK, new Item.Settings().group(ItemGroup.DECORATIONS)));
+		QuartzElevatorRegistry.init();
 	}
 }
