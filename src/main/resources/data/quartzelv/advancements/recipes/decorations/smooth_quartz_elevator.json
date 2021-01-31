@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["quartzelv:smooth_quartz_elevator"]
+  },
+  "criteria": {
+    "has_quartz_elevator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "quartzelv:quartz_elevator"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "quartzelv:smooth_quartz_elevator"
+      }
+    }
+  },
+  "requirements": [["has_quartz_elevator", "has_the_recipe"]]
+}
