@@ -6,5 +6,5 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 
 @Config(name = QuartzElevatorMod.MOD_ID)
 public class QuartzElevatorConfig implements ConfigData {
-    public int quartzElevatorDistance = 8;
+    public int quartzElevatorDistance = 16;
 }

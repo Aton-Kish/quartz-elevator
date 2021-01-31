@@ -11,9 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class QuartzElevatorBlock extends Block {
-    // Temporal Value
-    public static final int TELEPORTABLE_DISTANCE = 8;
-
     public QuartzElevatorBlock(Settings settings) {
         super(settings);
     }
