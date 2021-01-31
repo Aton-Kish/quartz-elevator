@@ -16,7 +16,8 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": ["atonkish.quartzelv.QuartzElevatorMod"]
+    "main": ["atonkish.quartzelv.QuartzElevatorMod"],
+    "modmenu": ["atonkish.quartzelv.config.QuartzElevatorMenu"]
   },
   "mixins": ["quartzelv.mixins.json"],
 
