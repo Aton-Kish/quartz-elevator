@@ -1,5 +1,8 @@
 package atonkish.quartzelv;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import atonkish.quartzelv.blocks.QuartzElevatorBlock;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -14,6 +17,7 @@ import net.minecraft.util.registry.Registry;
 
 public class QuartzElevatorMod implements ModInitializer {
 	public static final String MOD_ID = "quartzelv";
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public static final QuartzElevatorBlock QUARTZ_ELEVATOR_BLOCK = new QuartzElevatorBlock(
 			FabricBlockSettings.copy(Blocks.QUARTZ_BLOCK));
