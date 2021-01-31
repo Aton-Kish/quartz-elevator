@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.blocks.QuartzElevatorBlock;
+import atonkish.quartzelv.utils.MixinUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,9 +39,12 @@ public abstract class EntityMixin {
 
             if (block instanceof QuartzElevatorBlock) {
                 blockPos = blockPos.down();
+
+                String blockKey = MixinUtil.extractBlockKey(block);
+                int maxDistance = MixinUtil.isSmooth(blockKey) ? QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance
+                        : QuartzElevatorMod.CONFIG.quartzElevatorDistance;
                 int topY = blockPos.getY();
-                for (; blockPos.getY() > topY - QuartzElevatorMod.CONFIG.quartzElevatorDistance; blockPos = blockPos
-                        .down()) {
+                for (; blockPos.getY() > topY - maxDistance; blockPos = blockPos.down()) {
                     if (blockPos.getY() <= 0) {
                         break;
                     } else if ((world.getBlockState(blockPos.down()).getBlock().equals(block))
