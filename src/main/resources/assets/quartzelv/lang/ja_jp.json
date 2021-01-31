@@ -1,0 +1,8 @@
+{
+  "itemGroup.quartzelv.item_group": "クォーツエレベーター",
+
+  "block.quartzelv.quartz_elevator": "クォーツエレベーター",
+
+  "text.autoconfig.quartzelv.title": "クォーツエレベーター",
+  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "クォーツエレベーターの最大距離"
+}
