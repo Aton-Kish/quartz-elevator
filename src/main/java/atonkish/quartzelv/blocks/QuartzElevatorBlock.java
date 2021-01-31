@@ -11,8 +11,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class QuartzElevatorBlock extends Block {
+    // Temporal Value
+    public static final int TELEPORTABLE_DISTANCE = 8;
+
     public QuartzElevatorBlock(Settings settings) {
         super(settings);
+    }
+
+    public static boolean isTeleportable(World world, BlockPos blockPos) {
+        return world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2)).isEmpty();
     }
 
     @Environment(EnvType.CLIENT)
