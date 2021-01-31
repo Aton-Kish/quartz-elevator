@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        modMenuVersion = '1.14.13+build.19'
         clothConfigVersion = '4.8.3'
         autoConfig1uVersion = '3.3.1'
     }
@@ -31,6 +32,7 @@ dependencies {
 
     // Auto Config:
     // see https://shedaniel.gitbook.io/cloth-config/
+    modImplementation "io.github.prospector:modmenu:${modMenuVersion}"
     modApi("me.shedaniel.cloth:config-2:${clothConfigVersion}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
