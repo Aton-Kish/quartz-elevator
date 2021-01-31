@@ -4,5 +4,5 @@
   "block.quartzelv.quartz_elevator": "Quartz Elevator",
 
   "text.autoconfig.quartzelv.title": "Quartz Elevator",
-  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "Quartz Elevator Distance"
+  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "Max Distance of Quartz Elevator"
 }
