@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "quartz_elevator",
+  "ingredients": [
+    {
+      "item": "minecraft:quartz_block"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    }
+  ],
+  "result": {
+    "item": "quartzelv:quartz_elevator",
+    "count": 1
+  }
+}

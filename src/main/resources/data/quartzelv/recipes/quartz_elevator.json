@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "quartz_elevator",
+  "pattern": [" Q ", "QEQ", " Q "],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "quartzelv:quartz_elevator",
+    "count": 1
+  }
+}
