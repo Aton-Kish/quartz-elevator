@@ -6,5 +6,6 @@
 
   "text.autoconfig.quartzelv.title": "クォーツエレベーター",
   "text.autoconfig.quartzelv.option.quartzElevatorDistance": "クォーツエレベーターの最大距離",
-  "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "滑らかなクォーツエレベーターの最大距離"
+  "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "滑らかなクォーツエレベーターの最大距離",
+  "text.autoconfig.quartzelv.option.isPlayerOnly": "プレイヤーのみ"
 }
