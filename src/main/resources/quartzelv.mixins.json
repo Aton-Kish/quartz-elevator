@@ -3,7 +3,12 @@
   "minVersion": "0.8",
   "package": "atonkish.quartzelv.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": ["EntityMixin", "LivingEntityMixin"],
+  "mixins": [
+    "EntityMixin",
+    "LivingEntityMixin",
+    "MagmaCubeEntityMixin",
+    "SlimeEntityMixin"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1
