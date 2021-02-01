@@ -10,6 +10,14 @@ Adds Quartz Elevator and Smooth Quartz Elevator.
 
 You can teleport between elevators of the same kind with the same (x, z) coordinates: jump to go up and crouch to go down.
 
+## Requires
+
+The Quartz Elevator mod requires:
+
+- **Minecraft 1.16**
+- [**Fabric Loader**](https://fabricmc.net/use/)
+- [**Fabric API**](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+
 ## Recipe
 
 ### Quartz Elevator
