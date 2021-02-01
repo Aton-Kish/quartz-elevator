@@ -33,12 +33,16 @@ dependencies {
     // Auto Config:
     // see https://shedaniel.gitbook.io/cloth-config/
     modImplementation "io.github.prospector:modmenu:${modMenuVersion}"
+
     modApi("me.shedaniel.cloth:config-2:${clothConfigVersion}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    include "me.shedaniel.cloth:config-2:${clothConfigVersion}"
+
     modApi("me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    include "me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}"
 }
 
 processResources {
