@@ -1,7 +1,7 @@
 # Quartz Elevator
 
-[![version](https://cf.way2muchnoise.eu/versions/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
-[![downloads](https://cf.way2muchnoise.eu/short_quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+[![version](http://cf.way2muchnoise.eu/versions/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+[![downloads](http://cf.way2muchnoise.eu/short_quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
 [![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=main)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:main)
 
