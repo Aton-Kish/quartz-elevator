@@ -8,11 +8,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
 public class QuartzElevatorBlock extends Block {
     public QuartzElevatorBlock(Settings settings) {
         super(settings);
+    }
+
+    public static boolean isTeleportable(World world, BlockPos blockPos, Box entityBox) {
+        VoxelShape shape = world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2));
+        return shape.isEmpty() || !entityBox.intersects(shape.getBoundingBox());
     }
 
     public static boolean isTeleportable(World world, BlockPos blockPos) {
