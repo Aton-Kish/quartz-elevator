@@ -63,6 +63,13 @@ public final class MixinUtil {
         }
     }
 
+    public static Box getRelEntityBox(BlockPos blockPos, Box entityBox) {
+        int blockPosX = blockPos.getX();
+        int blockPosZ = blockPos.getZ();
+        return new Box(entityBox.minX - blockPosX, 0, entityBox.minZ - blockPosZ, entityBox.maxX - blockPosX,
+                entityBox.maxY - entityBox.minY, entityBox.maxZ - blockPosZ);
+    }
+
     public static String extractBlockKey(Block block) {
         String translationKey = block.getTranslationKey();
         String[] keyArr = translationKey.split(Pattern.quote("."));
