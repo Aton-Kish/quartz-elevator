@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import atonkish.quartzelv.utils.MixinUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -20,6 +21,9 @@ public abstract class EntityMixin {
     private Vec3d pos;
 
     @Shadow
+    public abstract Box getBoundingBox();
+
+    @Shadow
     public abstract BlockPos getBlockPos();
 
     @Shadow
@@ -28,8 +32,8 @@ public abstract class EntityMixin {
     @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
     private void setSneaking(boolean sneaking, CallbackInfo info) {
         if (sneaking) {
-            MixinUtil.teleportDown(world, getBlockPos(), (Double y) -> {
-                teleport(this.pos.x, y, this.pos.z);
+            MixinUtil.teleportDown(world, getBlockPos(), getBoundingBox(), (Double y) -> {
+                teleport(pos.x, y, pos.z);
                 return (Void) null;
             });
         }

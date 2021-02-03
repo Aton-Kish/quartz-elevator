@@ -22,7 +22,7 @@ public abstract class MagmaCubeEntityMixin extends Entity {
     private void jump(CallbackInfo info) {
         if (!QuartzElevatorMod.CONFIG.isPlayerOnly) {
             // `isPlayerOnly`: false -> Magma Cube entities can also teleport
-            MixinUtil.teleportUp(world, getBlockPos(), (Double y) -> {
+            MixinUtil.teleportUp(world, getBlockPos(), getBoundingBox(), (Double y) -> {
                 teleport(getX(), y, getZ());
                 return (Void) null;
             });

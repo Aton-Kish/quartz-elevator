@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 public final class MixinUtil {
@@ -17,10 +18,11 @@ public final class MixinUtil {
         Void teleportY(Double y);
     }
 
-    public static void teleportUp(World world, BlockPos blockPos, Funciton1 func) {
+    public static void teleportUp(World world, BlockPos blockPos, Box entityBox, Funciton1 func) {
+        Box relEntityBox = getRelEntityBox(blockPos, entityBox);
         Block block = world.getBlockState(blockPos.down()).getBlock();
 
-        if (block instanceof QuartzElevatorBlock) {
+        if (block instanceof QuartzElevatorBlock && QuartzElevatorBlock.isTeleportable(world, blockPos, relEntityBox)) {
             String blockKey = extractBlockKey(block);
             int maxDistance = isSmooth(blockKey) ? QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance
                     : QuartzElevatorMod.CONFIG.quartzElevatorDistance;
@@ -29,7 +31,7 @@ public final class MixinUtil {
                 if (blockPos.getY() >= world.getHeight()) {
                     break;
                 } else if ((world.getBlockState(blockPos.up()).getBlock().equals(block))
-                        && QuartzElevatorBlock.isTeleportable(world, blockPos.up(2))) {
+                        && QuartzElevatorBlock.isTeleportable(world, blockPos.up(2), relEntityBox)) {
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
                     func.teleportY((double) blockPos.up(2).getY());
@@ -39,10 +41,11 @@ public final class MixinUtil {
         }
     }
 
-    public static void teleportDown(World world, BlockPos blockPos, Funciton1 func) {
+    public static void teleportDown(World world, BlockPos blockPos, Box entityBox, Funciton1 func) {
+        Box relEntityBox = getRelEntityBox(blockPos, entityBox);
         Block block = world.getBlockState(blockPos.down()).getBlock();
 
-        if (block instanceof QuartzElevatorBlock) {
+        if (block instanceof QuartzElevatorBlock && QuartzElevatorBlock.isTeleportable(world, blockPos, relEntityBox)) {
             blockPos = blockPos.down();
 
             String blockKey = extractBlockKey(block);
@@ -53,7 +56,7 @@ public final class MixinUtil {
                 if (blockPos.getY() <= 0) {
                     break;
                 } else if ((world.getBlockState(blockPos.down()).getBlock().equals(block))
-                        && QuartzElevatorBlock.isTeleportable(world, blockPos)) {
+                        && QuartzElevatorBlock.isTeleportable(world, blockPos, relEntityBox)) {
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
                     func.teleportY((double) blockPos.getY());

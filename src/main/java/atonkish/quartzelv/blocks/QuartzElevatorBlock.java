@@ -22,10 +22,6 @@ public class QuartzElevatorBlock extends Block {
         return shape.isEmpty() || !entityBox.intersects(shape.getBoundingBox());
     }
 
-    public static boolean isTeleportable(World world, BlockPos blockPos) {
-        return world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2)).isEmpty();
-    }
-
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos blockPos, Random random) {
         for (int i = 0; i < 3; ++i) {

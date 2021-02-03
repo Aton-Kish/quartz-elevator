@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (!QuartzElevatorMod.CONFIG.isPlayerOnly || this.getClass().equals(ServerPlayerEntity.class)) {
             // `isPlayerOnly`: false -> all entities can teleport
             // `isPlayerOnly`: true -> only player entities can teleport
-            MixinUtil.teleportUp(world, getBlockPos(), (Double y) -> {
+            MixinUtil.teleportUp(world, getBlockPos(), getBoundingBox(), (Double y) -> {
                 teleport(getX(), y, getZ());
                 return (Void) null;
             });
