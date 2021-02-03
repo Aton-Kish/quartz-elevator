@@ -1,7 +1,7 @@
 buildscript {
     ext {
         modMenuVersion = '1.14.13+build.19'
-        clothConfigVersion = '4.8.3'
+        clothConfigVersion = '4.6.0'
         autoConfig1uVersion = '3.3.1'
     }
 }
