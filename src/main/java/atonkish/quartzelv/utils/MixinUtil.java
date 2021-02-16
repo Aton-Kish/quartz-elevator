@@ -30,7 +30,11 @@ public final class MixinUtil {
             for (; blockPos.getY() < bottomY + maxDistance; blockPos = blockPos.up()) {
                 if (blockPos.getY() >= world.getHeight()) {
                     break;
-                } else if ((world.getBlockState(blockPos.up()).getBlock().equals(block))
+                }
+
+                Block dstBlock = world.getBlockState(blockPos.up()).getBlock();
+                String dstBlockKey = extractBlockKey(dstBlock);
+                if (isEqualElevatorTypes(blockKey, dstBlockKey)
                         && QuartzElevatorBlock.isTeleportable(world, blockPos.up(2), relEntityBox)) {
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -55,7 +59,11 @@ public final class MixinUtil {
             for (; blockPos.getY() > topY - maxDistance; blockPos = blockPos.down()) {
                 if (blockPos.getY() <= 0) {
                     break;
-                } else if ((world.getBlockState(blockPos.down()).getBlock().equals(block))
+                }
+
+                Block dstBlock = world.getBlockState(blockPos.down()).getBlock();
+                String dstBlockKey = extractBlockKey(dstBlock);
+                if (isEqualElevatorTypes(blockKey, dstBlockKey)
                         && QuartzElevatorBlock.isTeleportable(world, blockPos, relEntityBox)) {
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -81,5 +89,9 @@ public final class MixinUtil {
 
     public static boolean isSmooth(String blockKey) {
         return blockKey.startsWith("smooth");
+    }
+
+    private static boolean isEqualElevatorTypes(String srcBlockKey, String dstBlockKey) {
+        return srcBlockKey.equals(dstBlockKey);
     }
 }
