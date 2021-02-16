@@ -7,5 +7,6 @@
   "text.autoconfig.quartzelv.title": "Quartz Elevator",
   "text.autoconfig.quartzelv.option.quartzElevatorDistance": "Max Distance of Quartz Elevator",
   "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "Max Distance of Smooth Quartz Elevator",
+  "text.autoconfig.quartzelv.option.mixTypes": "Moving between Different Elevator Types",
   "text.autoconfig.quartzelv.option.isPlayerOnly": "Player Only"
 }
