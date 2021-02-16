@@ -1,7 +1,7 @@
 # Quartz Elevator
 
 [![version](http://cf.way2muchnoise.eu/versions/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
-[![downloads](http://cf.way2muchnoise.eu/short_quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+[![downloads](http://cf.way2muchnoise.eu/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
 [![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=1.16)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:1.16)
 
@@ -10,7 +10,7 @@ the [OpenBlocks Elevators](https://www.curseforge.com/minecraft/mc-mods/openbloc
 and the [Simple Elevators](https://www.curseforge.com/minecraft/mc-mods/fabric-simple-elevators).  
 Adds Quartz Elevator and Smooth Quartz Elevator.
 
-You can teleport between elevators of the same kind with the same (x, z) coordinates: jump to go up and crouch to go down.
+You can teleport between elevators with the same (x, z) coordinates: jump to go up and crouch to go down.
 
 ## Requires
 
@@ -46,6 +46,10 @@ The Quartz Elevator mod requires:
 
 These are default values and can be configurable.
 
+### Mix types
+
+You cannot move between different elevator types by default, but can be configurable.
+
 ### Entity filter
 
 `Player Only` value is `false` by default.  
@@ -55,9 +59,9 @@ If `Player Only` is `true`, only player entities can teleport.
 
 The above values can be configured with the [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) GUI screen.
 
-![ModMenu](https://user-images.githubusercontent.com/38515249/106429887-6c5c2f80-64ae-11eb-843e-b18797c27417.png)
+![ModMenu](https://user-images.githubusercontent.com/38515249/108022998-02728700-7065-11eb-990c-c0311c3d0b03.png)
 
-![Config Screen](https://user-images.githubusercontent.com/38515249/106429882-6b2b0280-64ae-11eb-9d11-e6e048b9fdaa.png)
+![Config Screen](https://user-images.githubusercontent.com/38515249/108022992-00a8c380-7065-11eb-829a-8f4165913b10.png)
 
 ## License
 
