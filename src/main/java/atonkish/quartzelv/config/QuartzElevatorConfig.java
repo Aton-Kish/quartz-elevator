@@ -8,5 +8,6 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 public class QuartzElevatorConfig implements ConfigData {
     public int quartzElevatorDistance = 16;
     public int smoothQuartzElevatorDistance = 64;
+    public boolean mixTypes = false;
     public boolean isPlayerOnly = false;
 }

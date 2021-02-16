@@ -92,6 +92,10 @@ public final class MixinUtil {
     }
 
     private static boolean isEqualElevatorTypes(String srcBlockKey, String dstBlockKey) {
+        if (QuartzElevatorMod.CONFIG.mixTypes) {
+            srcBlockKey = srcBlockKey.replaceFirst("smooth_", "");
+            dstBlockKey = dstBlockKey.replaceFirst("smooth_", "");
+        }
         return srcBlockKey.equals(dstBlockKey);
     }
 }
