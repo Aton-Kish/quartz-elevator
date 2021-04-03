@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
@@ -25,7 +26,11 @@ public abstract class LivingEntityMixin extends Entity {
             // `isPlayerOnly`: false -> all entities can teleport
             // `isPlayerOnly`: true -> only player entities can teleport
             MixinUtil.teleportUp(world, getBlockPos(), getBoundingBox(), (Double y) -> {
-                teleport(getX(), y, getZ());
+                if (world instanceof ServerWorld) {
+                    refreshPositionAfterTeleport(getX(), y, getZ());
+                } else {
+                    teleport(getX(), y, getZ());
+                }
                 return (Void) null;
             });
         }
