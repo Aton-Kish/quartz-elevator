@@ -1,18 +1,26 @@
 buildscript {
     ext {
-        modMenuVersion = '1.14.13+build.19'
-        clothConfigVersion = '4.8.3'
-        autoConfig1uVersion = '3.3.1'
+        // cannot find deps in maven repository yet
+        // MUST place locally
+        modMenuVersion = '2.0.0-beta.7'
+        clothConfigVersion = '5.0.34'
     }
 }
 
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
+    id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+repositories {
+    maven {
+        url "https://maven.shedaniel.me/"
+    }
+}
+
+
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -38,11 +46,6 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include "me.shedaniel.cloth:config-2:${clothConfigVersion}"
-
-    modApi("me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include "me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}"
 }
 
 processResources {
@@ -60,13 +63,8 @@ tasks.withType(JavaCompile).configureEach {
     // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
 
-    // The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-    // JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-    // We'll use that if it's available, but otherwise we'll use the older option.
-    def targetVersion = 8
-    if (JavaVersion.current().isJava9Compatible()) {
-         it.options.release = targetVersion
-    }
+    // Minecraft 1.17 (21w19a) upwards uses Java 16.
+    it.options.release = 16
 }
 
 java {
