@@ -1,7 +1,10 @@
 buildscript {
     ext {
-        modMenuVersion = '1.14.13+build.19'
-        clothConfigVersion = '4.8.3'
+        // cannot find deps in maven repository yet
+        // MUST place locally
+        modMenuVersion = '2.0.0-beta.7'
+        clothConfigVersion = '5.0.34'
+
         autoConfig1uVersion = '3.3.1'
     }
 }
@@ -10,6 +13,13 @@ plugins {
     id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'maven-publish'
 }
+
+repositories {
+    maven {
+        url "https://maven.shedaniel.me/"
+    }
+}
+
 
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
