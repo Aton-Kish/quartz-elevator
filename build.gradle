@@ -4,8 +4,6 @@ buildscript {
         // MUST place locally
         modMenuVersion = '2.0.0-beta.7'
         clothConfigVersion = '5.0.34'
-
-        autoConfig1uVersion = '3.3.1'
     }
 }
 
@@ -48,11 +46,6 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include "me.shedaniel.cloth:config-2:${clothConfigVersion}"
-
-    modApi("me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include "me.sargunvohra.mcmods:autoconfig1u:${autoConfig1uVersion}"
 }
 
 processResources {
