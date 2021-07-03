@@ -27,12 +27,12 @@ public class QuartzElevatorRegistry {
      * Quartz Elevator
      */
     // Normal Quartz
-    public static final QuartzElevatorBlock QUARTZ_ELEVATOR_BLOCK = registerQuartzElevator(createQuartzElevatorBlock(),
-            "quartz_elevator");
+    public static final QuartzElevatorBlock QUARTZ_ELEVATOR_BLOCK = registerQuartzElevator(
+            createQuartzElevatorBlock(0.8f), "quartz_elevator");
 
     // Smooth Quartz
     public static final QuartzElevatorBlock SMOOTH_QUARTZ_ELEVATOR_BLOCK = registerQuartzElevator(
-            createQuartzElevatorBlock(), "smooth_quartz_elevator");
+            createQuartzElevatorBlock(2.0f, 6.0f), "smooth_quartz_elevator");
 
     /*
      * Finalized Item Group
@@ -52,6 +52,14 @@ public class QuartzElevatorRegistry {
 
     public static QuartzElevatorBlock createQuartzElevatorBlock() {
         return new QuartzElevatorBlock(FabricBlockSettings.copy(Blocks.QUARTZ_BLOCK));
+    }
+
+    public static QuartzElevatorBlock createQuartzElevatorBlock(float s1) {
+        return new QuartzElevatorBlock(FabricBlockSettings.copy(Blocks.QUARTZ_BLOCK).strength(s1));
+    }
+
+    public static QuartzElevatorBlock createQuartzElevatorBlock(float s1, float s2) {
+        return new QuartzElevatorBlock(FabricBlockSettings.copy(Blocks.QUARTZ_BLOCK).strength(s1, s2));
     }
 
     public static QuartzElevatorBlock registerQuartzElevator(QuartzElevatorBlock block, String id,
