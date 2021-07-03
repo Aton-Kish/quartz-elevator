@@ -36,9 +36,9 @@ public final class MixinUtil {
                 String dstBlockKey = extractBlockKey(dstBlock);
                 if (isEqualElevatorTypes(blockKey, dstBlockKey)
                         && QuartzElevatorBlock.isTeleportable(world, blockPos.up(2), relEntityBox)) {
+                    func.teleportY((double) blockPos.up(2).getY());
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    func.teleportY((double) blockPos.up(2).getY());
                     break;
                 }
             }
@@ -65,9 +65,9 @@ public final class MixinUtil {
                 String dstBlockKey = extractBlockKey(dstBlock);
                 if (isEqualElevatorTypes(blockKey, dstBlockKey)
                         && QuartzElevatorBlock.isTeleportable(world, blockPos, relEntityBox)) {
+                    func.teleportY((double) blockPos.getY());
                     world.playSound((PlayerEntity) null, blockPos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                             SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    func.teleportY((double) blockPos.getY());
                     break;
                 }
             }
