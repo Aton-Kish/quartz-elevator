@@ -28,7 +28,7 @@ public final class MixinUtil {
                     : QuartzElevatorMod.CONFIG.quartzElevatorDistance;
             int bottomY = blockPos.down().getY();
             for (; blockPos.getY() < bottomY + maxDistance; blockPos = blockPos.up()) {
-                if (blockPos.getY() >= world.getHeight()) {
+                if (blockPos.getY() >= world.getTopY()) {
                     break;
                 }
 
@@ -57,7 +57,7 @@ public final class MixinUtil {
                     : QuartzElevatorMod.CONFIG.quartzElevatorDistance;
             int topY = blockPos.getY();
             for (; blockPos.getY() > topY - maxDistance; blockPos = blockPos.down()) {
-                if (blockPos.getY() <= 0) {
+                if (blockPos.getY() <= world.getBottomY()) {
                     break;
                 }
 
