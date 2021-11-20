@@ -2,8 +2,6 @@ package atonkish.quartzelv.utils;
 
 import java.util.regex.Pattern;
 
-import atonkish.quartzelv.QuartzElevatorMod;
-import atonkish.quartzelv.blocks.QuartzElevatorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -11,6 +9,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+
+import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.block.QuartzElevatorBlock;
 
 public final class MixinUtil {
     @FunctionalInterface

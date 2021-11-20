@@ -5,14 +5,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import atonkish.quartzelv.QuartzElevatorMod;
-import atonkish.quartzelv.utils.MixinUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+
+import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.utils.MixinUtil;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
