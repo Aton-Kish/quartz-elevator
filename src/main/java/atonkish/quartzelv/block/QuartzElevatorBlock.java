@@ -1,4 +1,4 @@
-package atonkish.quartzelv.blocks;
+package atonkish.quartzelv.block;
 
 import java.util.Random;
 

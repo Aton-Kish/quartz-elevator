@@ -3,11 +3,14 @@ package atonkish.quartzelv;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import atonkish.quartzelv.config.QuartzElevatorConfig;
-import atonkish.quartzelv.registry.QuartzElevatorRegistry;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+
+import atonkish.quartzelv.block.ModBlocks;
+import atonkish.quartzelv.config.QuartzElevatorConfig;
+import atonkish.quartzelv.item.ModItemGroup;
+import atonkish.quartzelv.item.ModItems;
 
 public class QuartzElevatorMod implements ModInitializer {
 	public static final String MOD_ID = "quartzelv";
@@ -16,7 +19,12 @@ public class QuartzElevatorMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		QuartzElevatorRegistry.init();
+		// Blocks
+		ModBlocks.init();
+
+		// Items
+		ModItemGroup.init();
+		ModItems.init();
 
 		// Auto Config
 		AutoConfig.register(QuartzElevatorConfig.class, GsonConfigSerializer::new);
