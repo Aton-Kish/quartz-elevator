@@ -29,11 +29,15 @@ The Quartz Elevator mod requires:
 
 2. [Crafting] Brock of Quartz x1 + Ender Pearl x1 (shapeless crafting)
 
+- can be mined using any pickaxe. If mined without a pickaxe, it drops nothing.
+
 ### Smooth Quartz Elevator
 
 1. [Crafting] Smooth Quartz Block x1 + Ender Pearl x1 (shapeless crafting)
 
 2. [Smelting] Quartz Elevator x1 + any fuel
+
+- can be mined using any pickaxe. If mined without a pickaxe, it drops nothing.
 
 ## Config
 
