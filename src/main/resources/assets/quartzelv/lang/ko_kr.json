@@ -1,0 +1,10 @@
+{
+  "itemGroup.quartzelv.quartz_elevator": "석영 엘리베이터",
+  "block.quartzelv.quartz_elevator": "석영 엘리베이터",
+  "block.quartzelv.smooth_quartz_elevator": "매끄러운 석영 엘리베이터",
+  "text.autoconfig.quartzelv.title": "석영 엘리베이터",
+  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "석영 엘리베이터 최대 거리",
+  "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "매끄러운 석영 엘리베이터 최대 거리",
+  "text.autoconfig.quartzelv.option.mixTypes": "다른 엘리베이터 종류 간 이동 가능",
+  "text.autoconfig.quartzelv.option.isPlayerOnly": "플레이어만 사용"
+}
