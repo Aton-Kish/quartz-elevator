@@ -2,6 +2,7 @@ package atonkish.quartzelv.block;
 
 import java.util.Random;
 
+import atonkish.quartzelv.QuartzElevatorMod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -24,6 +25,10 @@ public class QuartzElevatorBlock extends Block {
 
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos blockPos, Random random) {
+        if (!QuartzElevatorMod.CONFIG.displayParticles) {
+            return;
+        }
+
         for (int i = 0; i < 3; ++i) {
             double d = (double) blockPos.getX() + 0.5D + (0.5D - random.nextDouble());
             double e = (double) blockPos.getY() + 0.5D + random.nextDouble();
