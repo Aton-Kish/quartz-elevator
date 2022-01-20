@@ -10,4 +10,5 @@ public class QuartzElevatorConfig implements ConfigData {
     public int smoothQuartzElevatorDistance = 64;
     public boolean mixTypes = false;
     public boolean isPlayerOnly = false;
+    public boolean displayParticles = true;
 }
