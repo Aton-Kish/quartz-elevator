@@ -37,11 +37,11 @@ public abstract class EntityMixin {
     @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
     private void setSneaking(boolean sneaking, CallbackInfo info) {
         if (sneaking) {
-            MixinUtil.teleportDown(world, getBlockPos(), getBoundingBox(), (Double y) -> {
-                if (world instanceof ServerWorld) {
-                    refreshPositionAfterTeleport(pos.x, y, pos.z);
+            MixinUtil.teleportDown(this.world, this.getBlockPos(), this.getBoundingBox(), (Double y) -> {
+                if (this.world instanceof ServerWorld) {
+                    this.refreshPositionAfterTeleport(this.pos.x, y, this.pos.z);
                 } else {
-                    teleport(pos.x, y, pos.z);
+                    this.teleport(this.pos.x, y, this.pos.z);
                 }
                 return (Void) null;
             });
