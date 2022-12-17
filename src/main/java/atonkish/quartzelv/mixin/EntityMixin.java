@@ -13,7 +13,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import atonkish.quartzelv.utils.MixinUtil;
+import atonkish.quartzelv.util.Teleport;
+import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -37,14 +38,16 @@ public abstract class EntityMixin {
     @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
     private void setSneaking(boolean sneaking, CallbackInfo info) {
         if (sneaking) {
-            MixinUtil.teleportDown(this.world, this.getBlockPos(), this.getBoundingBox(), (Double y) -> {
+            VerticalTeleporter verticalTeleporter = (Double y) -> {
                 if (this.world instanceof ServerWorld) {
                     this.refreshPositionAfterTeleport(this.pos.x, y, this.pos.z);
                 } else {
                     this.teleport(this.pos.x, y, this.pos.z);
                 }
+
                 return (Void) null;
-            });
+            };
+            Teleport.teleportDown(this.world, this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
         }
     }
 }

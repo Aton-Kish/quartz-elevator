@@ -13,7 +13,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 import atonkish.quartzelv.QuartzElevatorMod;
-import atonkish.quartzelv.utils.MixinUtil;
+import atonkish.quartzelv.util.Teleport;
+import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -23,17 +24,18 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
     private void jump(CallbackInfo info) {
+        // `isPlayerOnly`: false -> all entities can teleport
+        // `isPlayerOnly`: true -> only player entities can teleport
         if (!QuartzElevatorMod.CONFIG.isPlayerOnly || this.getClass().equals(ServerPlayerEntity.class)) {
-            // `isPlayerOnly`: false -> all entities can teleport
-            // `isPlayerOnly`: true -> only player entities can teleport
-            MixinUtil.teleportUp(this.world, this.getBlockPos(), this.getBoundingBox(), (Double y) -> {
+            VerticalTeleporter verticalTeleporter = (Double y) -> {
                 if (this.world instanceof ServerWorld) {
                     this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
                 } else {
                     this.teleport(this.getX(), y, this.getZ());
                 }
                 return (Void) null;
-            });
+            };
+            Teleport.teleportUp(this.world, this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
         }
     }
 }
