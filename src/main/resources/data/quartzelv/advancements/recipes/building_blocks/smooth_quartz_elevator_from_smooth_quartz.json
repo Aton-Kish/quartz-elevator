@@ -1,9 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "quartzelv:smooth_quartz_elevator_from_smooth_quartz"
-    ]
+    "recipes": ["quartzelv:smooth_quartz_elevator_from_smooth_quartz"]
   },
   "criteria": {
     "has_smooth_quartz": {
@@ -11,9 +9,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:smooth_quartz"
-            ]
+            "items": ["minecraft:smooth_quartz"]
           }
         ]
       }
@@ -25,10 +21,5 @@
       }
     }
   },
-  "requirements": [
-    [
-      "has_smooth_quartz",
-      "has_the_recipe"
-    ]
-  ]
+  "requirements": [["has_smooth_quartz", "has_the_recipe"]]
 }

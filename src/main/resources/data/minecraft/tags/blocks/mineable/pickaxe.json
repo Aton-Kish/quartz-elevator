@@ -1,7 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "quartzelv:quartz_elevator",
-    "quartzelv:smooth_quartz_elevator"
-  ]
+  "values": ["quartzelv:quartz_elevator", "quartzelv:smooth_quartz_elevator"]
 }
