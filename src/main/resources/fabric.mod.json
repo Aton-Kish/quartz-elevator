@@ -2,33 +2,32 @@
   "schemaVersion": 1,
   "id": "quartzelv",
   "version": "${version}",
+
   "name": "Quartz Elevator",
   "description": "Adds quartz elevators.",
-  "authors": [
-    "Aton-Kish"
-  ],
+  "authors": ["Aton-Kish"],
   "contact": {
     "homepage": "https://github.com/Aton-Kish/quartz-elevator",
     "sources": "https://github.com/Aton-Kish/quartz-elevator"
   },
+
   "license": "MIT",
   "icon": "assets/quartzelv/icon.png",
+
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "atonkish.quartzelv.QuartzElevatorMod"
-    ],
-    "modmenu": [
-      "atonkish.quartzelv.config.QuartzElevatorMenu"
-    ]
+    "main": ["atonkish.quartzelv.QuartzElevatorMod"],
+    "modmenu": ["atonkish.quartzelv.config.QuartzElevatorMenu"]
   },
-  "mixins": [
-    "quartzelv.mixins.json"
-  ],
+  "mixins": ["quartzelv.mixins.json"],
+
   "depends": {
-    "fabricloader": ">=0.14.6",
-    "fabric": "*",
-    "minecraft": "~1.19",
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
     "java": ">=17"
+  },
+  "suggests": {
+    "modmenu": "*"
   }
 }

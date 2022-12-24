@@ -1,6 +1,5 @@
 package atonkish.quartzelv.block;
 
-import atonkish.quartzelv.QuartzElevatorMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particle.ParticleTypes;
@@ -9,6 +8,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+
+import atonkish.quartzelv.QuartzElevatorMod;
 
 public class QuartzElevatorBlock extends Block {
     public QuartzElevatorBlock(Settings settings) {

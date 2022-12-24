@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+
 import net.fabricmc.api.ModInitializer;
 
 import atonkish.quartzelv.block.ModBlocks;
