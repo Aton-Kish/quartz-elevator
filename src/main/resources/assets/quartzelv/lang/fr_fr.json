@@ -1,0 +1,11 @@
+{
+  "itemGroup.quartzelv.quartz_elevator": "Ascenseur en Quartz",
+  "block.quartzelv.quartz_elevator": "Ascenseur en Quartz",
+  "block.quartzelv.smooth_quartz_elevator": "Ascenseur en Quartz Lisse",
+  "text.autoconfig.quartzelv.title": "Ascenseur en Quartz (Quartz Elevator)",
+  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "Distance maximale de l'Ascenseur en Quartz",
+  "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "Distance maximale de l'Ascenseur en Quartz Lisse",
+  "text.autoconfig.quartzelv.option.mixTypes": "Se déplacer entre différents types d'Ascenseurs",
+  "text.autoconfig.quartzelv.option.isPlayerOnly": "Joueur uniquement",
+  "text.autoconfig.quartzelv.option.displayParticles": "Afficher les particules"
+}
