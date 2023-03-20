@@ -1,7 +1,7 @@
 package atonkish.quartzelv;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -15,7 +15,7 @@ import atonkish.quartzelv.item.ModItems;
 
 public class QuartzElevatorMod implements ModInitializer {
 	public static final String MOD_ID = "quartzelv";
-	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static QuartzElevatorConfig CONFIG;
 
 	@Override
