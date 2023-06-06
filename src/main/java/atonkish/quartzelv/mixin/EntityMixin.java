@@ -7,21 +7,23 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.util.Teleport;
 import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
     @Shadow
-    public World world;
+    public abstract void refreshPositionAfterTeleport(double x, double y, double z);
+
     @Shadow
-    private Vec3d pos;
+    public abstract void teleport(double destX, double destY, double destZ);
 
     @Shadow
     public abstract Box getBoundingBox();
@@ -30,24 +32,33 @@ public abstract class EntityMixin {
     public abstract BlockPos getBlockPos();
 
     @Shadow
-    public abstract void teleport(double dstX, double dstY, double dstZ);
+    public abstract double getX();
 
     @Shadow
-    public abstract void refreshPositionAfterTeleport(double dstX, double dstY, double dstZ);
+    public abstract double getZ();
+
+    @Shadow
+    public abstract World getWorld();
 
     @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
     private void setSneaking(boolean sneaking, CallbackInfo info) {
+        if (!(this.getWorld() instanceof ServerWorld)) {
+            return;
+        }
+
+        // `isPlayerOnly`: false -> all entities can teleport
+        // `isPlayerOnly`: true -> only player entities can teleport
+        if (QuartzElevatorMod.CONFIG.isPlayerOnly && !this.getClass().equals(ServerPlayerEntity.class)) {
+            return;
+        }
+
         if (sneaking) {
             VerticalTeleporter verticalTeleporter = (Double y) -> {
-                if (this.world instanceof ServerWorld) {
-                    this.refreshPositionAfterTeleport(this.pos.x, y, this.pos.z);
-                } else {
-                    this.teleport(this.pos.x, y, this.pos.z);
-                }
-
+                this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
+                this.teleport(this.getX(), y, this.getZ());
                 return (Void) null;
             };
-            Teleport.teleportDown(this.world, this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+            Teleport.teleportDown(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
         }
     }
 }

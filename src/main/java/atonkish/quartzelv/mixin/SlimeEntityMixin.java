@@ -23,17 +23,20 @@ public abstract class SlimeEntityMixin extends Entity {
 
     @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
     private void jump(CallbackInfo info) {
-        // `isPlayerOnly`: false -> Slime entities can also teleport
-        if (!QuartzElevatorMod.CONFIG.isPlayerOnly) {
-            VerticalTeleporter verticalTeleporter = (Double y) -> {
-                if (this.world instanceof ServerWorld) {
-                    this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
-                } else {
-                    this.teleport(this.getX(), y, this.getZ());
-                }
-                return (Void) null;
-            };
-            Teleport.teleportUp(this.world, this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+        if (!(this.getWorld() instanceof ServerWorld)) {
+            return;
         }
+
+        // `isPlayerOnly`: false -> Slime entities can also teleport
+        if (QuartzElevatorMod.CONFIG.isPlayerOnly) {
+            return;
+        }
+
+        VerticalTeleporter verticalTeleporter = (Double y) -> {
+            this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
+            this.teleport(this.getX(), y, this.getZ());
+            return (Void) null;
+        };
+        Teleport.teleportUp(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
     }
 }
