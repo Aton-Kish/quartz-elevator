@@ -10,7 +10,7 @@ import net.fabricmc.api.ModInitializer;
 
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.config.QuartzElevatorConfig;
-import atonkish.quartzelv.item.ModItemGroup;
+import atonkish.quartzelv.item.ModItemGroups;
 import atonkish.quartzelv.item.ModItems;
 
 public class QuartzElevatorMod implements ModInitializer {
@@ -24,7 +24,7 @@ public class QuartzElevatorMod implements ModInitializer {
 		ModBlocks.init();
 
 		// Items
-		ModItemGroup.init();
+		ModItemGroups.init();
 		ModItems.init();
 
 		// Auto Config
