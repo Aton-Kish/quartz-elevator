@@ -9,6 +9,7 @@
     "MagmaCubeEntityMixin",
     "SlimeEntityMixin"
   ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }
