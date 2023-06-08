@@ -17,14 +17,14 @@
   "environment": "*",
   "entrypoints": {
     "main": ["atonkish.quartzelv.QuartzElevatorMod"],
-    "modmenu": ["atonkish.quartzelv.integration.modmenu.ModMenu"]
+    "modmenu": ["atonkish.quartzelv.config.QuartzElevatorMenu"]
   },
   "mixins": ["quartzelv.mixins.json"],
 
   "depends": {
-    "fabricloader": ">=0.14.21",
+    "fabricloader": ">=0.14.19",
     "fabric-api": "*",
-    "minecraft": "~1.20",
+    "minecraft": "~1.19.4",
     "java": ">=17"
   },
   "suggests": {

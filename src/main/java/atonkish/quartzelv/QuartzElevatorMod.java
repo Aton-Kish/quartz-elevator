@@ -9,6 +9,7 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 
 import atonkish.quartzelv.block.ModBlocks;
+import atonkish.quartzelv.config.QuartzElevatorConfig;
 import atonkish.quartzelv.item.ModItemGroups;
 import atonkish.quartzelv.item.ModItems;
 
