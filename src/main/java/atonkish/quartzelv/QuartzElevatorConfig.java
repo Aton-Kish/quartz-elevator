@@ -1,9 +1,7 @@
-package atonkish.quartzelv.config;
+package atonkish.quartzelv;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-
-import atonkish.quartzelv.QuartzElevatorMod;
 
 @Config(name = QuartzElevatorMod.MOD_ID)
 public class QuartzElevatorConfig implements ConfigData {
