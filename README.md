@@ -1,9 +1,11 @@
-# Quartz Elevator
-
-[![version](http://cf.way2muchnoise.eu/versions/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
-[![downloads](https://raw.githubusercontent.com/Aton-Kish/mcmod-stats/main/quartz-elevator/downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+[![Mod Loader: Fabric](https://img.shields.io/static/v1?label=modloader&message=fabric&color=brightgreen)](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+![Mod Environment](https://img.shields.io/static/v1?label=environment&message=client%2Fserver&color=yellow)
+![Version](https://cf.way2muchnoise.eu/versions/quartz-elevator.svg)
+[![CurseForge](https://cf.way2muchnoise.eu/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+[![Modrinth](https://img.shields.io/modrinth/dt/O9C0qdu8?color=%2300AF5C&logo=modrinth)](https://modrinth.com/mod/quartz-elevator)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
-[![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=1.19)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:1.19)
+
+# Quartz Elevator
 
 The Quartz Elevator mod is inspired by
 the [OpenBlocks Elevators](https://www.curseforge.com/minecraft/mc-mods/openblocks-elevator)
