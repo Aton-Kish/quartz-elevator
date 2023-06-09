@@ -3,7 +3,7 @@
 [![version](http://cf.way2muchnoise.eu/versions/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
 [![downloads](https://raw.githubusercontent.com/Aton-Kish/mcmod-stats/main/quartz-elevator/downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
-[![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=1.19)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:1.19)
+[![build](https://github.com/Aton-Kish/quartz-elevator/workflows/build/badge.svg?branch=1.20)](https://github.com/Aton-Kish/quartz-elevator/actions?query=workflow:build+branch:1.20)
 
 The Quartz Elevator mod is inspired by
 the [OpenBlocks Elevators](https://www.curseforge.com/minecraft/mc-mods/openblocks-elevator)
