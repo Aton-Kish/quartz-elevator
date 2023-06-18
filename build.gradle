@@ -126,6 +126,7 @@ curseforge {
 		addGameVersion "Fabric"
 		addGameVersion "Java 17"
 		addGameVersion "1.20"
+		addGameVersion "1.20.1"
 
 		relations {
 			requiredDependency "fabric-api"
@@ -146,7 +147,7 @@ modrinth {
 	versionType = "release"
 	changelog = "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v" + java.net.URLEncoder.encode(project.version, "UTF-8") + ")"
 
-	gameVersions = ["1.20"]
+	gameVersions = ["1.20", "1.20.1"]
 	loaders = ["fabric"]
 
 	dependencies {
