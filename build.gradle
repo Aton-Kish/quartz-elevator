@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id "maven-publish"
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 	id "com.modrinth.minotaur" version "2.+"
@@ -50,11 +50,6 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Uncomment the following line to enable the deprecated Fabric API modules.
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
-
-	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-
 	// Auto Config:
 	// see https://shedaniel.gitbook.io/cloth-config/
 	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
@@ -96,7 +91,8 @@ jar {
 // configure the maven publication
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		create("mavenJava", MavenPublication) {
+			artifactId = project.archives_base_name
 			from components.java
 		}
 	}
@@ -128,6 +124,7 @@ curseforge {
 		addGameVersion "1.20.1"
 		addGameVersion "1.20.2"
 		addGameVersion "1.20.3"
+		addGameVersion "1.20.4"
 
 		relations {
 			requiredDependency "fabric-api"
@@ -148,7 +145,7 @@ modrinth {
 	versionType = "release"
 	changelog = "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v" + java.net.URLEncoder.encode(project.version, "UTF-8") + ")"
 
-	gameVersions = ["1.20.1", "1.20.2", "1.20.3"]
+	gameVersions = ["1.20.1", "1.20.2", "1.20.3", "1.20.4"]
 	loaders = ["fabric"]
 
 	dependencies {

@@ -22,10 +22,10 @@
   "mixins": ["quartzelv.mixins.json"],
 
   "depends": {
-    "fabricloader": ">=0.15.0",
-    "fabric-api": "*",
+    "fabricloader": ">=0.15.10",
     "minecraft": "~1.20",
-    "java": ">=17"
+    "java": ">=17",
+    "fabric-api": "*"
   },
   "suggests": {
     "modmenu": "*"
