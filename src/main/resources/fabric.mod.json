@@ -17,6 +17,10 @@
   "environment": "*",
   "entrypoints": {
     "main": ["atonkish.quartzelv.QuartzElevatorMod"],
+    "fabric-gametest": [
+      "atonkish.quartzelv.gametest.testcase.LootTableTests",
+      "atonkish.quartzelv.gametest.testcase.TeleportTests"
+    ],
     "modmenu": ["atonkish.quartzelv.integration.modmenu.ModMenu"]
   },
   "mixins": ["quartzelv.mixins.json"],
