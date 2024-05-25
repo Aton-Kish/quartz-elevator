@@ -25,6 +25,7 @@
     "modmenu": ["atonkish.quartzelv.integration.modmenu.ModMenu"]
   },
   "mixins": ["quartzelv.mixins.json"],
+  "accessWidener": "quartzelv.accesswidener",
 
   "depends": {
     "fabricloader": ">=0.15.10",
