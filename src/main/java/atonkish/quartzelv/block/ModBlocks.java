@@ -1,7 +1,6 @@
 package atonkish.quartzelv.block;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.Instrument;
@@ -27,7 +26,7 @@ public class ModBlocks {
 
         QUARTZ_ELEVATOR_BLOCK = Registry.register(
                 Registries.BLOCK, QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,
-                new QuartzElevatorBlock(FabricBlockSettings
+                new QuartzElevatorBlock(AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
                         .instrument(Instrument.BASEDRUM)
@@ -35,7 +34,7 @@ public class ModBlocks {
                         .strength(0.8f)));
         SMOOTH_QUARTZ_ELEVATOR = Registry.register(
                 Registries.BLOCK, SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER,
-                new QuartzElevatorBlock(FabricBlockSettings
+                new QuartzElevatorBlock(AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
                         .instrument(Instrument.BASEDRUM)

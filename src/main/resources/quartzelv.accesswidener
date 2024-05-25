@@ -1,0 +1,4 @@
+accessWidener v1 named
+
+# for gametest
+accessible method net/minecraft/entity/LivingEntity jump ()V
