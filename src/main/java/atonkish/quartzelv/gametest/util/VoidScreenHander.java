@@ -4,8 +4,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 
-public class ModTestScreenHander extends ScreenHandler {
-    public ModTestScreenHander() {
+public class VoidScreenHander extends ScreenHandler {
+    public VoidScreenHander() {
         super(null, 0);
     }
 
