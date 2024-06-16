@@ -3,7 +3,7 @@ package atonkish.quartzelv.block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -29,7 +29,7 @@ public class ModBlocks {
                 new QuartzElevatorBlock(AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
-                        .instrument(Instrument.BASEDRUM)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
                         .requiresTool()
                         .strength(0.8f)));
         SMOOTH_QUARTZ_ELEVATOR = Registry.register(
@@ -37,7 +37,7 @@ public class ModBlocks {
                 new QuartzElevatorBlock(AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
-                        .instrument(Instrument.BASEDRUM)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
                         .requiresTool()
                         .strength(2.0f, 6.0f)));
     }
