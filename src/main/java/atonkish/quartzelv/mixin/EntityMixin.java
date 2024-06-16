@@ -11,6 +11,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 
 import atonkish.quartzelv.QuartzElevatorMod;
@@ -20,10 +22,7 @@ import atonkish.quartzelv.util.VerticalTeleporter;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
     @Shadow
-    public abstract void refreshPositionAfterTeleport(double x, double y, double z);
-
-    @Shadow
-    public abstract void teleport(double destX, double destY, double destZ);
+    public abstract Entity teleportTo(TeleportTarget teleportTarget);
 
     @Shadow
     public abstract Box getBoundingBox();
@@ -36,6 +35,12 @@ public abstract class EntityMixin {
 
     @Shadow
     public abstract double getZ();
+
+    @Shadow
+    public abstract float getYaw();
+
+    @Shadow
+    public abstract float getPitch();
 
     @Shadow
     public abstract World getWorld();
@@ -54,8 +59,13 @@ public abstract class EntityMixin {
 
         if (sneaking) {
             VerticalTeleporter verticalTeleporter = (Double y) -> {
-                this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
-                this.teleport(this.getX(), y, this.getZ());
+                this.teleportTo(new TeleportTarget(
+                        (ServerWorld) this.getWorld(),
+                        new Vec3d(this.getX(), y, this.getZ()),
+                        Vec3d.ZERO,
+                        this.getYaw(),
+                        this.getPitch(),
+                        TeleportTarget.NO_OP));
                 return (Void) null;
             };
             Teleport.teleportDown(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
