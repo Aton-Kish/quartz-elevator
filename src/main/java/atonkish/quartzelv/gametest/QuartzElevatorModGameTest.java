@@ -7,7 +7,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.BeforeBatch;
 import net.minecraft.test.CustomTestProvider;
 import net.minecraft.test.TestFunction;
+
 import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.gametest.testcase.AdvancementTests;
 import atonkish.quartzelv.gametest.testcase.LootTableTests;
 import atonkish.quartzelv.gametest.testcase.RecipeTests;
 import atonkish.quartzelv.gametest.testcase.TeleportTests;
@@ -48,6 +50,7 @@ public class QuartzElevatorModGameTest {
             return testFunctions;
         }
 
+        testFunctions.addAll(AdvancementTests.TEST_FUNCTIONS);
         testFunctions.addAll(LootTableTests.TEST_FUNCTIONS);
         testFunctions.addAll(RecipeTests.TEST_FUNCTIONS);
         testFunctions.addAll(TeleportTests.TEST_FUNCTIONS);
