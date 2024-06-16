@@ -1,7 +1,7 @@
 [![Mod Loader: Fabric](https://img.shields.io/static/v1?label=modloader&message=fabric&color=brightgreen)](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 ![Mod Environment](https://img.shields.io/static/v1?label=environment&message=client%2Fserver&color=yellow)
-![Version](https://cf.way2muchnoise.eu/versions/quartz-elevator.svg)
-[![CurseForge](https://cf.way2muchnoise.eu/quartz-elevator.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
+![Version](https://cf.way2muchnoise.eu/versions/442509.svg)
+[![CurseForge](https://cf.way2muchnoise.eu/442509.svg)](https://www.curseforge.com/minecraft/mc-mods/quartz-elevator)
 [![Modrinth](https://img.shields.io/modrinth/dt/O9C0qdu8?color=%2300AF5C&logo=modrinth)](https://modrinth.com/mod/quartz-elevator)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
 
