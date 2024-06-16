@@ -21,8 +21,8 @@ public class ModBlocks {
     }
 
     static {
-        QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = new Identifier(QuartzElevatorMod.MOD_ID, "quartz_elevator");
-        SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER = new Identifier(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
+        QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "quartz_elevator");
+        SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
 
         QUARTZ_ELEVATOR_BLOCK = Registry.register(
                 Registries.BLOCK, QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,

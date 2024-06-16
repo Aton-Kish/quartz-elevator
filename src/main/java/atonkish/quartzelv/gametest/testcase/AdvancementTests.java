@@ -34,22 +34,22 @@ public class AdvancementTests {
             add(AdvancementTests.createTest(
                     "Obtain Quartz Elevator recipe advancement by having Quartz",
                     Items.QUARTZ,
-                    new Identifier(QuartzElevatorMod.MOD_ID, "recipes/building_blocks/quartz_elevator")));
+                    Identifier.of(QuartzElevatorMod.MOD_ID, "recipes/building_blocks/quartz_elevator")));
             add(AdvancementTests.createTest(
                     "Obtain Quartz Elevator recipe advancement by having Quartz Block",
                     Items.QUARTZ_BLOCK,
-                    new Identifier(QuartzElevatorMod.MOD_ID,
+                    Identifier.of(QuartzElevatorMod.MOD_ID,
                             "recipes/building_blocks/quartz_elevator_from_quartz_block")));
 
             // Smooth Quartz Elevator
             add(AdvancementTests.createTest(
                     "Obtain Smooth Quartz Elevator recipe advancement by having Quartz Elevator",
                     ModItems.QUARTZ_ELEVATOR_BLOCK,
-                    new Identifier(QuartzElevatorMod.MOD_ID, "recipes/building_blocks/smooth_quartz_elevator")));
+                    Identifier.of(QuartzElevatorMod.MOD_ID, "recipes/building_blocks/smooth_quartz_elevator")));
             add(AdvancementTests.createTest(
                     "Obtain Smooth Quartz Elevator recipe advancement by Smooth Quartz",
                     Items.SMOOTH_QUARTZ,
-                    new Identifier(QuartzElevatorMod.MOD_ID,
+                    Identifier.of(QuartzElevatorMod.MOD_ID,
                             "recipes/building_blocks/smooth_quartz_elevator_from_smooth_quartz")));
         }
     };

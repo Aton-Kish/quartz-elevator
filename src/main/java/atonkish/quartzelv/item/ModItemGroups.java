@@ -34,7 +34,7 @@ public class ModItemGroups {
     }
 
     private static RegistryKey<ItemGroup> register(String id) {
-        return RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier(QuartzElevatorMod.MOD_ID, id));
+        return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(QuartzElevatorMod.MOD_ID, id));
     }
 
     static {
