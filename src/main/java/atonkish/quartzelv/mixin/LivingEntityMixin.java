@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 
 import atonkish.quartzelv.QuartzElevatorMod;
@@ -35,8 +37,13 @@ public abstract class LivingEntityMixin extends Entity {
         }
 
         VerticalTeleporter verticalTeleporter = (Double y) -> {
-            this.refreshPositionAfterTeleport(this.getX(), y, this.getZ());
-            this.teleport(this.getX(), y, this.getZ());
+            this.teleportTo(new TeleportTarget(
+                    (ServerWorld) this.getWorld(),
+                    new Vec3d(this.getX(), y, this.getZ()),
+                    Vec3d.ZERO,
+                    this.getYaw(),
+                    this.getPitch(),
+                    TeleportTarget.NO_OP));
             return (Void) null;
         };
         Teleport.teleportUp(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
