@@ -29,7 +29,7 @@ public class Teleport {
                     : QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance;
 
             for (; blockPos.getY() < bottomY + maxDistance; blockPos = blockPos.up()) {
-                if (blockPos.getY() >= world.getTopY()) {
+                if (blockPos.getY() >= world.getTopYInclusive()) {
                     break;
                 }
 

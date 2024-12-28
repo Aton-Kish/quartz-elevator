@@ -1,12 +1,17 @@
 package atonkish.quartzelv.item;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 
+import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 
 public class ModItems {
@@ -16,23 +21,32 @@ public class ModItems {
     public static void init() {
     }
 
+    private static RegistryKey<Item> keyOf(RegistryKey<Block> blockKey) {
+        QuartzElevatorMod.LOGGER.info("Key: {}", blockKey.getValue());
+        return RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
+    }
+
     private static Item register(Block block) {
-        return ModItems.register(new BlockItem(block, new Item.Settings()));
+        return register(block, BlockItem::new);
     }
 
-    private static Item register(BlockItem item) {
-        return ModItems.register(item.getBlock(), (Item) item);
+    private static Item register(Block block, BiFunction<Block, Item.Settings, Item> factory) {
+        return register(block, factory, new Item.Settings());
     }
 
-    protected static Item register(Block block, Item item) {
-        return ModItems.register(Registries.BLOCK.getId(block), item);
+    private static Item register(Block block, BiFunction<Block, Item.Settings, Item> factory, Item.Settings settings) {
+        return register(
+                keyOf(block.getRegistryEntry().registryKey()),
+                itemSettings -> (Item) factory.apply(block, itemSettings), settings.useBlockPrefixedTranslationKey());
     }
 
-    private static Item register(Identifier id, Item item) {
-        if (item instanceof BlockItem) {
-            ((BlockItem) item).appendBlocks(Item.BLOCK_ITEMS, item);
+    private static Item register(RegistryKey<Item> key, Function<Item.Settings, Item> factory, Item.Settings settings) {
+        Item item = factory.apply(settings.registryKey(key));
+        if (item instanceof BlockItem blockItem) {
+            blockItem.appendBlocks(Item.BLOCK_ITEMS, item);
         }
-        return Registry.register(Registries.ITEM, id, item);
+
+        return Registry.register(Registries.ITEM, key, item);
     }
 
     static {

@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
@@ -18,6 +16,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.StructureTestUtil;
 import net.minecraft.test.TestFunction;
+
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.item.ModItems;
@@ -108,7 +108,7 @@ public class RecipeTests {
                 (context) -> {
                     // Arrange
                     ServerWorld world = context.getWorld();
-                    RecipeManager recipeManager = world.getRecipeManager();
+                    ServerRecipeManager recipeManager = world.getRecipeManager();
                     DynamicRegistryManager registryManager = world.getRegistryManager();
                     T recipe = recipeManager.getFirstMatch(type, input, world).orElseThrow().value();
 

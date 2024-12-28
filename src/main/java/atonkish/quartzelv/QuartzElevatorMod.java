@@ -3,10 +3,10 @@ package atonkish.quartzelv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.fabricmc.api.ModInitializer;
+
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-
-import net.fabricmc.api.ModInitializer;
 
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.item.ModItemGroups;
