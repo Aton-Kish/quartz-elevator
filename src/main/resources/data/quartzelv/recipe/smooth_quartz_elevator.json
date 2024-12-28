@@ -1,9 +1,7 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "ingredient": {
-    "item": "quartzelv:quartz_elevator"
-  },
+  "ingredient": "quartzelv:quartz_elevator",
   "result": {
     "id": "quartzelv:smooth_quartz_elevator"
   },

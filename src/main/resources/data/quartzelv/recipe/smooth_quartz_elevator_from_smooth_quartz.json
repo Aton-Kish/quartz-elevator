@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:smooth_quartz"
-    },
-    {
-      "item": "minecraft:ender_pearl"
-    }
+    "minecraft:smooth_quartz",
+    "minecraft:ender_pearl"
   ],
   "result": {
     "id": "quartzelv:smooth_quartz_elevator",
