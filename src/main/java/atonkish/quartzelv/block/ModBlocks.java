@@ -1,11 +1,15 @@
 package atonkish.quartzelv.block;
 
+import java.util.function.Function;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 import atonkish.quartzelv.QuartzElevatorMod;
@@ -20,25 +24,42 @@ public class ModBlocks {
     public static void init() {
     }
 
+    private static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory,
+            AbstractBlock.Settings settings) {
+        Block block = factory.apply(settings.registryKey(key));
+        return Registry.register(Registries.BLOCK, key, block);
+    }
+
+    private static RegistryKey<Block> keyOf(Identifier id) {
+        return RegistryKey.of(RegistryKeys.BLOCK, id);
+    }
+
+    private static Block register(Identifier id, Function<AbstractBlock.Settings, Block> factory,
+            AbstractBlock.Settings settings) {
+        return register(keyOf(id), factory, settings);
+    }
+
     static {
         QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "quartz_elevator");
         SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
 
-        QUARTZ_ELEVATOR_BLOCK = Registry.register(
-                Registries.BLOCK, QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,
-                new QuartzElevatorBlock(AbstractBlock.Settings
+        QUARTZ_ELEVATOR_BLOCK = register(
+                QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,
+                QuartzElevatorBlock::new,
+                AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
                         .instrument(NoteBlockInstrument.BASEDRUM)
                         .requiresTool()
-                        .strength(0.8f)));
-        SMOOTH_QUARTZ_ELEVATOR = Registry.register(
-                Registries.BLOCK, SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER,
-                new QuartzElevatorBlock(AbstractBlock.Settings
+                        .strength(0.8f));
+        SMOOTH_QUARTZ_ELEVATOR = register(
+                SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER,
+                QuartzElevatorBlock::new,
+                AbstractBlock.Settings
                         .create()
                         .mapColor(MapColor.OFF_WHITE)
                         .instrument(NoteBlockInstrument.BASEDRUM)
                         .requiresTool()
-                        .strength(2.0f, 6.0f)));
+                        .strength(2.0f, 6.0f));
     }
 }
