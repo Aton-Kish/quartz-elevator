@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.item.Item;
@@ -20,6 +18,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;

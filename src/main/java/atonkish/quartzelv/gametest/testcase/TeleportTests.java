@@ -3,8 +3,6 @@ package atonkish.quartzelv.gametest.testcase;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +13,8 @@ import net.minecraft.test.TestFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;

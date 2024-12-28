@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Recipe;
@@ -18,6 +16,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.StructureTestUtil;
 import net.minecraft.test.TestFunction;
+
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.item.ModItems;

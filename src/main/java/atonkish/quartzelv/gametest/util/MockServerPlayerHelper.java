@@ -3,9 +3,9 @@ package atonkish.quartzelv.gametest.util;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.mojang.authlib.GameProfile;
-
 import io.netty.channel.embedded.EmbeddedChannel;
+
+import com.mojang.authlib.GameProfile;
 
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkSide;
