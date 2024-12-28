@@ -103,7 +103,7 @@ public class LootTableTests {
                     context.runAtTick(tickOrigin, () -> {
                         player.interactionManager.processBlockBreakingAction(
                                 context.getAbsolutePos(blockPos), PlayerActionC2SPacket.Action.START_DESTROY_BLOCK,
-                                Direction.NORTH, context.getWorld().getTopY(), 0);
+                                Direction.NORTH, context.getWorld().getHeight(), 0);
 
                         futurePartialAct1.complete(null);
                     });
@@ -115,7 +115,7 @@ public class LootTableTests {
                         player.interactionManager.processBlockBreakingAction(
                                 context.getAbsolutePos(blockPos),
                                 PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK,
-                                Direction.NORTH, context.getWorld().getTopY(), 0);
+                                Direction.NORTH, context.getWorld().getHeight(), 0);
 
                         futurePartialAct2.complete(null);
                     });
