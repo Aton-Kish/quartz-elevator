@@ -11,7 +11,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
-import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 
 public class ModItems {
@@ -22,7 +21,6 @@ public class ModItems {
     }
 
     private static RegistryKey<Item> keyOf(RegistryKey<Block> blockKey) {
-        QuartzElevatorMod.LOGGER.info("Key: {}", blockKey.getValue());
         return RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
     }
 

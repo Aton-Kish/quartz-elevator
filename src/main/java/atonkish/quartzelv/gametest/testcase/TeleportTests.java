@@ -2,28 +2,34 @@ package atonkish.quartzelv.gametest.testcase;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.StructureTestUtil;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
+import atonkish.quartzelv.gametest.util.TestFunction;
+import atonkish.quartzelv.gametest.util.TestIdentifier;
 
 public class TeleportTests {
-    public static final String BATCH_ID_DEFAULT = QuartzElevatorMod.MOD_ID + ":TeleportBatch";
-    public static final String BATCH_ID_WITH_MIX_TYPES = QuartzElevatorMod.MOD_ID + ":TeleportWithMixTypesBatch";
-    public static final String BATCH_ID_WITH_PLAYER_ONLY = QuartzElevatorMod.MOD_ID + ":TeleportWithPlayerOnlyBatch";
+    private static final String TEST_ENVIRONMENT_DEFAULT = String.format("%s:teleport/default",
+            QuartzElevatorMod.MOD_ID);
+    private static final String TEST_ENVIRONMENT_WITH_MIX_TYPES = String.format("%s:teleport/with_mix_types",
+            QuartzElevatorMod.MOD_ID);
+    private static final String TEST_ENVIRONMENT_WITH_PLAYER_ONLY = String.format("%s:teleport/with_player_only",
+            QuartzElevatorMod.MOD_ID);
+    private static final String TEST_STRUCTURE_EMPTY = "fabric-gametest-api-v1:empty";
 
     public static final Collection<TestFunction> TEST_FUNCTIONS = new ArrayList<>() {
         {
@@ -34,28 +40,28 @@ public class TeleportTests {
             // Player: Quartz Elevator -> Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     16,
                     true));
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     17,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     16,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     17,
@@ -64,28 +70,28 @@ public class TeleportTests {
             // Player: Smooth Quartz Elevator -> Smooth Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     64,
                     true));
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     65,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     64,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     65,
@@ -94,14 +100,14 @@ public class TeleportTests {
             // Player: Quartz Elevator -> Smooth Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     16,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     16,
@@ -110,14 +116,14 @@ public class TeleportTests {
             // Player: Smooth Quartz Elevator -> Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Smooth Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     64,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Smooth Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     64,
@@ -126,7 +132,7 @@ public class TeleportTests {
             // Zombie
             add(TeleportTests.createTestMobTeleportUp(
                     "Zombie teleport up from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.ZOMBIE,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -134,7 +140,7 @@ public class TeleportTests {
                     true));
             add(TeleportTests.createTestMobTeleportUp(
                     "Zombie teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.ZOMBIE,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -144,7 +150,7 @@ public class TeleportTests {
             // Slime
             add(TeleportTests.createTestMobTeleportUp(
                     "Slime teleport up from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.SLIME,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -152,7 +158,7 @@ public class TeleportTests {
                     true));
             add(TeleportTests.createTestMobTeleportUp(
                     "Slime teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.SLIME,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -162,7 +168,7 @@ public class TeleportTests {
             // Magma Cube
             add(TeleportTests.createTestMobTeleportUp(
                     "Magma Cube teleport up from Quartz Elevator to Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.MAGMA_CUBE,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -170,7 +176,7 @@ public class TeleportTests {
                     true));
             add(TeleportTests.createTestMobTeleportUp(
                     "Magma Cube teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator",
-                    TeleportTests.BATCH_ID_DEFAULT,
+                    TeleportTests.TEST_ENVIRONMENT_DEFAULT,
                     EntityType.MAGMA_CUBE,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -184,28 +190,28 @@ public class TeleportTests {
             // Player: Quartz Elevator -> Smooth Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Quartz Elevator to Smooth Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     16,
                     true));
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Quartz Elevator to Smooth Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     17,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Quartz Elevator to Smooth Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     16,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Quartz Elevator to Smooth Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     17,
@@ -214,28 +220,28 @@ public class TeleportTests {
             // Player: Smooth Quartz Elevator -> Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Smooth Quartz Elevator to Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     64,
                     true));
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player does not teleport up from Smooth Quartz Elevator to Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     65,
                     false));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Smooth Quartz Elevator to Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     64,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player does not teleport down from Smooth Quartz Elevator to Quartz Elevator with mix types enabled",
-                    TeleportTests.BATCH_ID_WITH_MIX_TYPES,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     65,
@@ -248,14 +254,14 @@ public class TeleportTests {
             // Player: Quartz Elevator -> Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Quartz Elevator to Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     16,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Quartz Elevator to Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     16,
@@ -264,14 +270,14 @@ public class TeleportTests {
             // Player: Smooth Quartz Elevator -> Smooth Quartz Elevator
             add(TeleportTests.createTestPlayerTeleportUp(
                     "Player teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     64,
                     true));
             add(TeleportTests.createTestPlayerTeleportDown(
                     "Player teleport down from Smooth Quartz Elevator to Smooth Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     64,
@@ -280,7 +286,7 @@ public class TeleportTests {
             // Zombie
             add(TeleportTests.createTestMobTeleportUp(
                     "Zombie teleport up from Quartz Elevator to Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.ZOMBIE,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -288,7 +294,7 @@ public class TeleportTests {
                     false));
             add(TeleportTests.createTestMobTeleportUp(
                     "Zombie teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.ZOMBIE,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -298,7 +304,7 @@ public class TeleportTests {
             // Slime
             add(TeleportTests.createTestMobTeleportUp(
                     "Slime teleport up from Quartz Elevator to Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.SLIME,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -306,7 +312,7 @@ public class TeleportTests {
                     false));
             add(TeleportTests.createTestMobTeleportUp(
                     "Slime teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.SLIME,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -316,7 +322,7 @@ public class TeleportTests {
             // Magma Cube
             add(TeleportTests.createTestMobTeleportUp(
                     "Magma Cube teleport up from Quartz Elevator to Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.MAGMA_CUBE,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
                     ModBlocks.QUARTZ_ELEVATOR_BLOCK,
@@ -324,7 +330,7 @@ public class TeleportTests {
                     false));
             add(TeleportTests.createTestMobTeleportUp(
                     "Magma Cube teleport up from Smooth Quartz Elevator to Smooth Quartz Elevator with player only enabled",
-                    TeleportTests.BATCH_ID_WITH_PLAYER_ONLY,
+                    TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY,
                     EntityType.MAGMA_CUBE,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
                     ModBlocks.SMOOTH_QUARTZ_ELEVATOR,
@@ -333,28 +339,54 @@ public class TeleportTests {
         }
     };
 
-    private static TestFunction createTestPlayerTeleportUp(String name, String batchId,
-            Block elevatorBlock1, Block elevatorBlock2, int distance, boolean shouldTeleport) {
-        String testName = String.format("%s %s %s",
-                QuartzElevatorMod.MOD_ID,
-                TeleportTests.class.getSimpleName(),
-                name)
-                .replace(" ", "_");
+    private static void beforeTest(TestContext context, String environment) {
+        if (environment == TeleportTests.TEST_ENVIRONMENT_WITH_MIX_TYPES) {
+            QuartzElevatorMod.CONFIG.quartzElevatorDistance = 16;
+            QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance = 64;
+            QuartzElevatorMod.CONFIG.mixTypes = true;
+            QuartzElevatorMod.CONFIG.isPlayerOnly = false;
+            QuartzElevatorMod.CONFIG.displayParticles = true;
+        } else if (environment == TeleportTests.TEST_ENVIRONMENT_WITH_PLAYER_ONLY) {
+            QuartzElevatorMod.CONFIG.quartzElevatorDistance = 16;
+            QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance = 64;
+            QuartzElevatorMod.CONFIG.mixTypes = false;
+            QuartzElevatorMod.CONFIG.isPlayerOnly = true;
+            QuartzElevatorMod.CONFIG.displayParticles = true;
+        } else {
+            QuartzElevatorMod.CONFIG.quartzElevatorDistance = 16;
+            QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance = 64;
+            QuartzElevatorMod.CONFIG.mixTypes = false;
+            QuartzElevatorMod.CONFIG.isPlayerOnly = false;
+            QuartzElevatorMod.CONFIG.displayParticles = true;
+        }
+    }
+
+    private static TestFunction createTestPlayerTeleportUp(String name,
+            String environment,
+            Block elevatorBlock1,
+            Block elevatorBlock2,
+            int distance,
+            boolean shouldTeleport) {
+        Identifier testIdentifier = TestIdentifier.of(QuartzElevatorMod.MOD_ID,
+                TeleportTests.class,
+                name);
 
         return new TestFunction(
-                batchId,
-                testName,
-                FabricGameTest.EMPTY_STRUCTURE,
-                StructureTestUtil.getRotation(0),
-                100,
-                0L,
+                testIdentifier,
+                environment,
+                TeleportTests.TEST_STRUCTURE_EMPTY,
+                20,
+                0,
                 true,
+                BlockRotation.NONE,
                 false,
                 1,
                 1,
                 false,
                 (context) -> {
                     // Arrange
+                    TeleportTests.beforeTest(context, environment);
+
                     BlockPos blockPos1 = BlockPos.ORIGIN;
                     BlockPos blockPos2 = BlockPos.ORIGIN.up(distance);
 
@@ -362,41 +394,62 @@ public class TeleportTests {
                     context.setBlockState(blockPos2, elevatorBlock2);
 
                     ServerPlayerEntity player = MockServerPlayerHelper.spawn(context,
-                            GameMode.SURVIVAL, Vec3d.of(blockPos1.up(1)));
+                            GameMode.SURVIVAL,
+                            Vec3d.of(blockPos1.up(1)));
 
                     // Act
-                    player.jump();
+                    CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();
+                    CompletableFuture<Void> futurePartialAct2 = new CompletableFuture<>();
+
+                    long tickOrigin = 0;
+                    context.runAtTick(tickOrigin, () -> {
+                        player.jump();
+
+                        futurePartialAct1.complete(null);
+                    });
+
+                    long tickAfterTeleporting = 1;
+                    context.runAtTick(tickAfterTeleporting, () -> {
+                        futurePartialAct2.complete(null);
+                    });
 
                     // Assert
-                    try {
-                        context.expectEntityAt(player, (shouldTeleport ? blockPos2 : blockPos1).up(1));
-                    } catch (Exception e) {
-                        QuartzElevatorMod.LOGGER.error(e.getMessage());
-                        throw e;
-                    } finally {
-                        MockServerPlayerHelper.destroy(context, player);
-                    }
+                    CompletableFuture.allOf(futurePartialAct1, futurePartialAct2).thenRun(() -> {
+                        try {
+                            context.expectEntityAt(player, (shouldTeleport ? blockPos2 : blockPos1).up(1));
+                        } catch (Exception e) {
+                            QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
+                            throw e;
+                        } finally {
+                            MockServerPlayerHelper.destroy(context, player);
+                        }
+
+                        context.complete();
+                    });
 
                     context.complete();
                 });
     }
 
-    private static <E extends MobEntity> TestFunction createTestMobTeleportUp(String name, String batchId,
-            EntityType<E> type, Block elevatorBlock1, Block elevatorBlock2, int distance, boolean shouldTeleport) {
-        String testName = String.format("%s %s %s",
-                QuartzElevatorMod.MOD_ID,
-                TeleportTests.class.getSimpleName(),
-                name)
-                .replace(" ", "_");
+    private static <E extends MobEntity> TestFunction createTestMobTeleportUp(String name,
+            String environment,
+            EntityType<E> type,
+            Block elevatorBlock1,
+            Block elevatorBlock2,
+            int distance,
+            boolean shouldTeleport) {
+        Identifier testIdentifier = TestIdentifier.of(QuartzElevatorMod.MOD_ID,
+                TeleportTests.class,
+                name);
 
         return new TestFunction(
-                batchId,
-                testName,
-                FabricGameTest.EMPTY_STRUCTURE,
-                StructureTestUtil.getRotation(0),
-                100,
-                0L,
+                testIdentifier,
+                environment,
+                TeleportTests.TEST_STRUCTURE_EMPTY,
+                20,
+                0,
                 true,
+                BlockRotation.NONE,
                 false,
                 1,
                 1,
@@ -412,36 +465,55 @@ public class TeleportTests {
                     LivingEntity mob = context.spawnMob(type, blockPos1.up(1));
 
                     // Act
-                    mob.jump();
+                    CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();
+                    CompletableFuture<Void> futurePartialAct2 = new CompletableFuture<>();
+
+                    long tickOrigin = 0;
+                    context.runAtTick(tickOrigin, () -> {
+                        mob.jump();
+
+                        futurePartialAct1.complete(null);
+                    });
+
+                    long tickAfterTeleporting = 1;
+                    context.runAtTick(tickAfterTeleporting, () -> {
+                        futurePartialAct2.complete(null);
+                    });
 
                     // Assert
-                    try {
-                        context.expectEntityAt(mob, (shouldTeleport ? blockPos2 : blockPos1).up(1));
-                    } catch (Exception e) {
-                        QuartzElevatorMod.LOGGER.error(e.getMessage());
-                        throw e;
-                    }
+                    CompletableFuture.allOf(futurePartialAct1, futurePartialAct2).thenRun(() -> {
+                        try {
+                            context.expectEntityAt(mob, (shouldTeleport ? blockPos2 : blockPos1).up(1));
+                        } catch (Exception e) {
+                            QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
+                            throw e;
+                        }
+
+                        context.complete();
+                    });
 
                     context.complete();
                 });
     }
 
-    private static TestFunction createTestPlayerTeleportDown(String name, String batchId,
-            Block elevatorBlock1, Block elevatorBlock2, int distance, boolean shouldTeleport) {
-        String testName = String.format("%s %s %s",
-                QuartzElevatorMod.MOD_ID,
-                TeleportTests.class.getSimpleName(),
-                name)
-                .replace(" ", "_");
+    private static TestFunction createTestPlayerTeleportDown(String name,
+            String environment,
+            Block elevatorBlock1,
+            Block elevatorBlock2,
+            int distance,
+            boolean shouldTeleport) {
+        Identifier testIdentifier = TestIdentifier.of(QuartzElevatorMod.MOD_ID,
+                TeleportTests.class,
+                name);
 
         return new TestFunction(
-                batchId,
-                testName,
-                FabricGameTest.EMPTY_STRUCTURE,
-                StructureTestUtil.getRotation(0),
-                100,
-                0L,
+                testIdentifier,
+                environment,
+                TeleportTests.TEST_STRUCTURE_EMPTY,
+                20,
+                0,
                 true,
+                BlockRotation.NONE,
                 false,
                 1,
                 1,
@@ -455,21 +527,39 @@ public class TeleportTests {
                     context.setBlockState(blockPos2, elevatorBlock2);
 
                     ServerPlayerEntity player = MockServerPlayerHelper.spawn(context,
-                            GameMode.SURVIVAL, Vec3d.of(blockPos1.up(1)));
+                            GameMode.SURVIVAL,
+                            Vec3d.of(blockPos1.up(1)));
 
                     // Act
-                    player.setSneaking(true);
-                    player.setSneaking(false);
+                    CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();
+                    CompletableFuture<Void> futurePartialAct2 = new CompletableFuture<>();
+
+                    long tickOrigin = 0;
+                    context.runAtTick(tickOrigin, () -> {
+                        player.setSneaking(true);
+                        player.setSneaking(false);
+
+                        futurePartialAct1.complete(null);
+                    });
+
+                    long tickAfterTeleporting = 1;
+                    context.runAtTick(tickAfterTeleporting, () -> {
+                        futurePartialAct2.complete(null);
+                    });
 
                     // Assert
-                    try {
-                        context.expectEntityAt(player, (shouldTeleport ? blockPos2 : blockPos1).up(1));
-                    } catch (Exception e) {
-                        QuartzElevatorMod.LOGGER.error(e.getMessage());
-                        throw e;
-                    } finally {
-                        MockServerPlayerHelper.destroy(context, player);
-                    }
+                    CompletableFuture.allOf(futurePartialAct1, futurePartialAct2).thenRun(() -> {
+                        try {
+                            context.expectEntityAt(player, (shouldTeleport ? blockPos2 : blockPos1).up(1));
+                        } catch (Exception e) {
+                            QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
+                            throw e;
+                        } finally {
+                            MockServerPlayerHelper.destroy(context, player);
+                        }
+
+                        context.complete();
+                    });
 
                     context.complete();
                 });

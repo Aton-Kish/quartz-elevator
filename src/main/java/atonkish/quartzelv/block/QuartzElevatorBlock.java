@@ -34,7 +34,7 @@ public class QuartzElevatorBlock extends Block {
             double g = 0.0D;
             double h = random.nextDouble() * 0.0625D;
             double l = 0.0D;
-            world.addParticle(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
+            world.addParticleClient(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
         }
     }
 }

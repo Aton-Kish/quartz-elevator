@@ -12,21 +12,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.StructureTestUtil;
-import net.minecraft.test.TestFunction;
+import net.minecraft.text.Text;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
+import atonkish.quartzelv.gametest.util.TestFunction;
+import atonkish.quartzelv.gametest.util.TestIdentifier;
 import atonkish.quartzelv.item.ModItems;
 
 public class AdvancementTests {
-    public static final String BATCH_ID = QuartzElevatorMod.MOD_ID + ":AdvancementBatch";
+    private static final String TEST_ENVIRONMENT_DEFAULT = String.format("%s:advancement/default",
+            QuartzElevatorMod.MOD_ID);
+    private static final String TEST_STRUCTURE_EMPTY = "fabric-gametest-api-v1:empty";
 
     public static final Collection<TestFunction> TEST_FUNCTIONS = new ArrayList<>() {
         {
@@ -55,20 +57,18 @@ public class AdvancementTests {
     };
 
     private static TestFunction createTest(String name, Item item, Identifier advancementId) {
-        String testName = String.format("%s %s %s",
-                QuartzElevatorMod.MOD_ID,
-                AdvancementTests.class.getSimpleName(),
-                name)
-                .replace(" ", "_");
+        Identifier testIdentifier = TestIdentifier.of(QuartzElevatorMod.MOD_ID,
+                AdvancementTests.class,
+                name);
 
         return new TestFunction(
-                AdvancementTests.BATCH_ID,
-                testName,
-                FabricGameTest.EMPTY_STRUCTURE,
-                StructureTestUtil.getRotation(0),
-                1000,
-                0L,
+                testIdentifier,
+                AdvancementTests.TEST_ENVIRONMENT_DEFAULT,
+                AdvancementTests.TEST_STRUCTURE_EMPTY,
+                20,
+                0,
                 true,
+                BlockRotation.NONE,
                 false,
                 1,
                 1,
@@ -76,9 +76,9 @@ public class AdvancementTests {
                 (context) -> {
                     // Arrange
                     ServerPlayerEntity player = MockServerPlayerHelper.spawn(context,
-                            GameMode.SURVIVAL, Vec3d.of(BlockPos.ORIGIN));
-                    AdvancementEntry entry = context.getWorld().getServer().getAdvancementLoader()
-                            .get(advancementId);
+                            GameMode.SURVIVAL,
+                            Vec3d.of(BlockPos.ORIGIN));
+                    AdvancementEntry entry = context.getWorld().getServer().getAdvancementLoader().get(advancementId);
                     AdvancementProgress progress = player.getAdvancementTracker().getProgress(entry);
 
                     // Act
@@ -108,14 +108,16 @@ public class AdvancementTests {
                     // Assert
                     CompletableFuture.allOf(futurePartialAct1, futurePartialAct2).thenRun(() -> {
                         try {
-                            context.assertFalse(progressMap.get(progressMapKeyBeforeHavingItem), String.format(
-                                    "Expected that advancement %s has not been done yet, but it has been already done.",
-                                    entry));
-                            context.assertTrue(progressMap.get(progressMapKeyAfterHavingItem), String.format(
-                                    "Expected that advancement %s has been done, but it has not been done yet.",
-                                    entry));
+                            context.assertFalse(progressMap.get(progressMapKeyBeforeHavingItem),
+                                    Text.of(String.format(
+                                            "Expected that advancement %s has not been done yet, but it has been already done.",
+                                            entry)));
+                            context.assertTrue(progressMap.get(progressMapKeyAfterHavingItem),
+                                    Text.of(String.format(
+                                            "Expected that advancement %s has been done, but it has not been done yet.",
+                                            entry)));
                         } catch (Exception e) {
-                            QuartzElevatorMod.LOGGER.error("[{}] {}", testName, e.getMessage());
+                            QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
                             throw e;
                         } finally {
                             MockServerPlayerHelper.destroy(context, player);

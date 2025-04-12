@@ -1,4 +1,5 @@
 accessWidener v1 named
 
 # for gametest
-accessible method net/minecraft/entity/LivingEntity jump ()V
+accessible	class	net/minecraft/registry/RegistryLoader$Loader
+accessible	method	net/minecraft/entity/LivingEntity jump ()V
