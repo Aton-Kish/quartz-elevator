@@ -14,16 +14,19 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.test.StructureTestUtil;
-import net.minecraft.test.TestFunction;
-
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.text.Text;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 
 import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.gametest.util.TestFunction;
+import atonkish.quartzelv.gametest.util.TestIdentifier;
 import atonkish.quartzelv.item.ModItems;
 
 public class RecipeTests {
-    public static final String BATCH_ID = QuartzElevatorMod.MOD_ID + ":LootTableBatch";
+    private static final String TEST_ENVIRONMENT_DEFAULT = String.format("%s:recipe/default",
+            QuartzElevatorMod.MOD_ID);
+    private static final String TEST_STRUCTURE_EMPTY = "fabric-gametest-api-v1:empty";
 
     public static final Collection<TestFunction> TEST_FUNCTIONS = new ArrayList<>() {
         {
@@ -86,21 +89,21 @@ public class RecipeTests {
     };
 
     private static <I extends RecipeInput, T extends Recipe<I>> TestFunction createTest(String name,
-            RecipeType<T> type, I input, ItemStack expected) {
-        String testName = String.format("%s %s %s",
-                QuartzElevatorMod.MOD_ID,
-                RecipeTests.class.getSimpleName(),
-                name)
-                .replace(" ", "_");
+            RecipeType<T> type,
+            I input,
+            ItemStack expected) {
+        Identifier testIdentifier = TestIdentifier.of(QuartzElevatorMod.MOD_ID,
+                RecipeTests.class,
+                name);
 
         return new TestFunction(
-                RecipeTests.BATCH_ID,
-                testName,
-                FabricGameTest.EMPTY_STRUCTURE,
-                StructureTestUtil.getRotation(0),
-                100,
-                0L,
+                testIdentifier,
+                RecipeTests.TEST_ENVIRONMENT_DEFAULT,
+                RecipeTests.TEST_STRUCTURE_EMPTY,
+                20,
+                0,
                 true,
+                BlockRotation.NONE,
                 false,
                 1,
                 1,
@@ -118,9 +121,9 @@ public class RecipeTests {
                     // Assert
                     try {
                         context.assertTrue(ItemStack.areEqual(actual, expected),
-                                "Recipe result differs from expected.");
+                                Text.of("Recipe result differs from expected."));
                     } catch (Exception e) {
-                        QuartzElevatorMod.LOGGER.error("[{}] {}", testName, e.getMessage());
+                        QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
                         throw e;
                     }
 
