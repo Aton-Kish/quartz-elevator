@@ -17,8 +17,6 @@ import net.minecraft.test.TestEnvironmentDefinition;
 import net.minecraft.test.TestInstance;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.impl.gametest.FabricGameTestRunner;
-import net.fabricmc.loader.api.FabricLoader;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -52,10 +50,6 @@ public class QuartzElevatorMod implements ModInitializer {
 	}
 
 	private void onInitializeGameTest() {
-		if (!(FabricGameTestRunner.ENABLED || FabricLoader.getInstance().isDevelopmentEnvironment())) {
-			return;
-		}
-
 		for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
 			LOGGER.debug("Registering test function: {}", testFunction.identifier());
 			Registry.register(Registries.TEST_FUNCTION, testFunction.identifier(), testFunction.testFunction());
