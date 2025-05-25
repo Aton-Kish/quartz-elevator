@@ -1,0 +1,11 @@
+{
+  "itemGroup.quartzelv.quartz_elevator": "مصعد الكوارتز",
+  "block.quartzelv.quartz_elevator": "مصعد الكوارتز",
+  "block.quartzelv.smooth_quartz_elevator": "مصعد الكوارتز الأملس ",
+  "text.autoconfig.quartzelv.title": "مصعد الكوارتز",
+  "text.autoconfig.quartzelv.option.quartzElevatorDistance": "المسافة القصوى لمصعد الكوارتز",
+  "text.autoconfig.quartzelv.option.smoothQuartzElevatorDistance": "المسافة القصوى لمصعد الكوارتز الأملس",
+  "text.autoconfig.quartzelv.option.mixTypes": "تحريك بين أنواع المصاعد",
+  "text.autoconfig.quartzelv.option.isPlayerOnly": "لاعب فقط",
+  "text.autoconfig.quartzelv.option.displayParticles": "اظهار الجسيمات"
+}
