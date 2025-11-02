@@ -43,11 +43,11 @@ public abstract class EntityMixin {
     public abstract float getPitch();
 
     @Shadow
-    public abstract World getWorld();
+    public abstract World getEntityWorld();
 
     @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
     private void setSneaking(boolean sneaking, CallbackInfo info) {
-        if (!(this.getWorld() instanceof ServerWorld)) {
+        if (!(this.getEntityWorld() instanceof ServerWorld)) {
             return;
         }
 
@@ -60,7 +60,7 @@ public abstract class EntityMixin {
         if (sneaking) {
             VerticalTeleporter verticalTeleporter = (Double y) -> {
                 this.teleportTo(new TeleportTarget(
-                        (ServerWorld) this.getWorld(),
+                        (ServerWorld) this.getEntityWorld(),
                         new Vec3d(this.getX(), y, this.getZ()),
                         Vec3d.ZERO,
                         this.getYaw(),
@@ -68,7 +68,7 @@ public abstract class EntityMixin {
                         TeleportTarget.NO_OP));
                 return (Void) null;
             };
-            Teleport.teleportDown(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+            Teleport.teleportDown(this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
         }
     }
 }
