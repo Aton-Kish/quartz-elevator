@@ -26,7 +26,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
     private void jump(CallbackInfo info) {
-        if (!(this.getWorld() instanceof ServerWorld)) {
+        if (!(this.getEntityWorld() instanceof ServerWorld)) {
             return;
         }
 
@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin extends Entity {
 
         VerticalTeleporter verticalTeleporter = (Double y) -> {
             this.teleportTo(new TeleportTarget(
-                    (ServerWorld) this.getWorld(),
+                    (ServerWorld) this.getEntityWorld(),
                     new Vec3d(this.getX(), y, this.getZ()),
                     Vec3d.ZERO,
                     this.getYaw(),
@@ -46,6 +46,6 @@ public abstract class LivingEntityMixin extends Entity {
                     TeleportTarget.NO_OP));
             return (Void) null;
         };
-        Teleport.teleportUp(this.getWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+        Teleport.teleportUp(this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
     }
 }
