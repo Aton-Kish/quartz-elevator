@@ -12,29 +12,29 @@ import net.minecraft.world.World;
 import atonkish.quartzelv.QuartzElevatorMod;
 
 public class QuartzElevatorBlock extends Block {
-    public QuartzElevatorBlock(Settings settings) {
-        super(settings);
+  public QuartzElevatorBlock(Settings settings) {
+    super(settings);
+  }
+
+  public static boolean isTeleportable(World world, BlockPos blockPos, Box entityBox) {
+    VoxelShape shape = world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2));
+    return shape.isEmpty() || !entityBox.intersects(shape.getBoundingBox());
+  }
+
+  @Override
+  public void randomDisplayTick(BlockState state, World world, BlockPos blockPos, Random random) {
+    if (!QuartzElevatorMod.CONFIG.displayParticles) {
+      return;
     }
 
-    public static boolean isTeleportable(World world, BlockPos blockPos, Box entityBox) {
-        VoxelShape shape = world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2));
-        return shape.isEmpty() || !entityBox.intersects(shape.getBoundingBox());
+    for (int i = 0; i < 3; ++i) {
+      double d = (double) blockPos.getX() + 0.5D + (0.5D - random.nextDouble());
+      double e = (double) blockPos.getY() + 0.5D + random.nextDouble();
+      double f = (double) blockPos.getZ() + 0.5D + (0.5D - random.nextDouble());
+      double g = 0.0D;
+      double h = random.nextDouble() * 0.0625D;
+      double l = 0.0D;
+      world.addParticleClient(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
     }
-
-    @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos blockPos, Random random) {
-        if (!QuartzElevatorMod.CONFIG.displayParticles) {
-            return;
-        }
-
-        for (int i = 0; i < 3; ++i) {
-            double d = (double) blockPos.getX() + 0.5D + (0.5D - random.nextDouble());
-            double e = (double) blockPos.getY() + 0.5D + random.nextDouble();
-            double f = (double) blockPos.getZ() + 0.5D + (0.5D - random.nextDouble());
-            double g = 0.0D;
-            double h = random.nextDouble() * 0.0625D;
-            double l = 0.0D;
-            world.addParticleClient(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
-        }
-    }
+  }
 }

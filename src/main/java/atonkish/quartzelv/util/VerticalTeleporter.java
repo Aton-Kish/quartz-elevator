@@ -2,5 +2,5 @@ package atonkish.quartzelv.util;
 
 @FunctionalInterface
 public interface VerticalTeleporter {
-    Void teleportY(Double y);
+  Void teleportY(Double y);
 }

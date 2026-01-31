@@ -19,31 +19,34 @@ import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(SlimeEntity.class)
 public abstract class SlimeEntityMixin extends Entity {
-    public SlimeEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
+  public SlimeEntityMixin(EntityType<?> type, World world) {
+    super(type, world);
+  }
+
+  @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
+  private void jump(CallbackInfo info) {
+    if (!(this.getEntityWorld() instanceof ServerWorld)) {
+      return;
     }
 
-    @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
-    private void jump(CallbackInfo info) {
-        if (!(this.getEntityWorld() instanceof ServerWorld)) {
-            return;
-        }
+    // `isPlayerOnly`: false -> Slime entities can also teleport
+    if (QuartzElevatorMod.CONFIG.isPlayerOnly) {
+      return;
+    }
 
-        // `isPlayerOnly`: false -> Slime entities can also teleport
-        if (QuartzElevatorMod.CONFIG.isPlayerOnly) {
-            return;
-        }
-
-        VerticalTeleporter verticalTeleporter = (Double y) -> {
-            this.teleportTo(new TeleportTarget(
-                    (ServerWorld) this.getEntityWorld(),
-                    new Vec3d(this.getX(), y, this.getZ()),
-                    Vec3d.ZERO,
-                    this.getYaw(),
-                    this.getPitch(),
-                    TeleportTarget.NO_OP));
-            return (Void) null;
+    VerticalTeleporter verticalTeleporter =
+        (Double y) -> {
+          this.teleportTo(
+              new TeleportTarget(
+                  (ServerWorld) this.getEntityWorld(),
+                  new Vec3d(this.getX(), y, this.getZ()),
+                  Vec3d.ZERO,
+                  this.getYaw(),
+                  this.getPitch(),
+                  TeleportTarget.NO_OP));
+          return (Void) null;
         };
-        Teleport.teleportUp(this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
-    }
+    Teleport.teleportUp(
+        this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+  }
 }

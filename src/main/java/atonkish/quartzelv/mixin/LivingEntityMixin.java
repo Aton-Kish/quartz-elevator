@@ -20,32 +20,36 @@ import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-    public LivingEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
+  public LivingEntityMixin(EntityType<?> type, World world) {
+    super(type, world);
+  }
+
+  @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
+  private void jump(CallbackInfo info) {
+    if (!(this.getEntityWorld() instanceof ServerWorld)) {
+      return;
     }
 
-    @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
-    private void jump(CallbackInfo info) {
-        if (!(this.getEntityWorld() instanceof ServerWorld)) {
-            return;
-        }
+    // `isPlayerOnly`: false -> all entities can teleport
+    // `isPlayerOnly`: true -> only player entities can teleport
+    if (QuartzElevatorMod.CONFIG.isPlayerOnly
+        && !this.getClass().equals(ServerPlayerEntity.class)) {
+      return;
+    }
 
-        // `isPlayerOnly`: false -> all entities can teleport
-        // `isPlayerOnly`: true -> only player entities can teleport
-        if (QuartzElevatorMod.CONFIG.isPlayerOnly && !this.getClass().equals(ServerPlayerEntity.class)) {
-            return;
-        }
-
-        VerticalTeleporter verticalTeleporter = (Double y) -> {
-            this.teleportTo(new TeleportTarget(
-                    (ServerWorld) this.getEntityWorld(),
-                    new Vec3d(this.getX(), y, this.getZ()),
-                    Vec3d.ZERO,
-                    this.getYaw(),
-                    this.getPitch(),
-                    TeleportTarget.NO_OP));
-            return (Void) null;
+    VerticalTeleporter verticalTeleporter =
+        (Double y) -> {
+          this.teleportTo(
+              new TeleportTarget(
+                  (ServerWorld) this.getEntityWorld(),
+                  new Vec3d(this.getX(), y, this.getZ()),
+                  Vec3d.ZERO,
+                  this.getYaw(),
+                  this.getPitch(),
+                  TeleportTarget.NO_OP));
+          return (Void) null;
         };
-        Teleport.teleportUp(this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
-    }
+    Teleport.teleportUp(
+        this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+  }
 }

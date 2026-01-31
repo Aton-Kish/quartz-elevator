@@ -179,17 +179,17 @@ task curseforge(type: Exec) {
 
 		# release
 		./mcmod-releaser curseforge \
-		    --file "build/libs/${project.archives_base_name}-${project.version}.jar" \
-		    --project-id "${project.curseforge_id}" \
-		    --release-type "release" \
-		    --version "${project.version}" \
-		    --name "Quartz Elevator v${project.version}" \
-		    --changelog "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v${java.net.URLEncoder.encode(project.version, "UTF-8")})" \
-		    --environments "Client,Server" \
-		    --loaders "Fabric" \
-		    --java-versions "Java 21" \
-		    --game-versions "1.21.9,1.21.10,1.21.11" \
-		    --dependencies "fabric-api=required,cloth-config=embedded,modmenu=optional"
+			--file "build/libs/${project.archives_base_name}-${project.version}.jar" \
+			--project-id "${project.curseforge_id}" \
+			--release-type "release" \
+			--version "${project.version}" \
+			--name "Quartz Elevator v${project.version}" \
+			--changelog "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v${java.net.URLEncoder.encode(project.version, "UTF-8")})" \
+			--environments "Client,Server" \
+			--loaders "Fabric" \
+			--java-versions "Java 21" \
+			--game-versions "1.21.9,1.21.10,1.21.11" \
+			--dependencies "fabric-api=required,cloth-config=embedded,modmenu=optional"
 	"""
 }
 

@@ -15,51 +15,55 @@ import net.minecraft.util.Identifier;
 import atonkish.quartzelv.QuartzElevatorMod;
 
 public class ModBlocks {
-    public static final Identifier QUARTZ_ELEVATOR_BLOCK_IDENTIFIER;
-    public static final Identifier SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER;
+  public static final Identifier QUARTZ_ELEVATOR_BLOCK_IDENTIFIER;
+  public static final Identifier SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER;
 
-    public static final Block QUARTZ_ELEVATOR_BLOCK;
-    public static final Block SMOOTH_QUARTZ_ELEVATOR;
+  public static final Block QUARTZ_ELEVATOR_BLOCK;
+  public static final Block SMOOTH_QUARTZ_ELEVATOR;
 
-    public static void init() {
-    }
+  public static void init() {}
 
-    private static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory,
-            AbstractBlock.Settings settings) {
-        Block block = factory.apply(settings.registryKey(key));
-        return Registry.register(Registries.BLOCK, key, block);
-    }
+  private static Block register(
+      RegistryKey<Block> key,
+      Function<AbstractBlock.Settings, Block> factory,
+      AbstractBlock.Settings settings) {
+    Block block = factory.apply(settings.registryKey(key));
+    return Registry.register(Registries.BLOCK, key, block);
+  }
 
-    private static RegistryKey<Block> keyOf(Identifier id) {
-        return RegistryKey.of(RegistryKeys.BLOCK, id);
-    }
+  private static Block register(
+      Identifier id,
+      Function<AbstractBlock.Settings, Block> factory,
+      AbstractBlock.Settings settings) {
+    return register(keyOf(id), factory, settings);
+  }
 
-    private static Block register(Identifier id, Function<AbstractBlock.Settings, Block> factory,
-            AbstractBlock.Settings settings) {
-        return register(keyOf(id), factory, settings);
-    }
+  private static RegistryKey<Block> keyOf(Identifier id) {
+    return RegistryKey.of(RegistryKeys.BLOCK, id);
+  }
 
-    static {
-        QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "quartz_elevator");
-        SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
+  static {
+    QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = Identifier.of(QuartzElevatorMod.MOD_ID, "quartz_elevator");
+    SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER =
+        Identifier.of(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
 
-        QUARTZ_ELEVATOR_BLOCK = register(
-                QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,
-                QuartzElevatorBlock::new,
-                AbstractBlock.Settings
-                        .create()
-                        .mapColor(MapColor.OFF_WHITE)
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .requiresTool()
-                        .strength(0.8f));
-        SMOOTH_QUARTZ_ELEVATOR = register(
-                SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER,
-                QuartzElevatorBlock::new,
-                AbstractBlock.Settings
-                        .create()
-                        .mapColor(MapColor.OFF_WHITE)
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .requiresTool()
-                        .strength(2.0f, 6.0f));
-    }
+    QUARTZ_ELEVATOR_BLOCK =
+        register(
+            QUARTZ_ELEVATOR_BLOCK_IDENTIFIER,
+            QuartzElevatorBlock::new,
+            AbstractBlock.Settings.create()
+                .mapColor(MapColor.OFF_WHITE)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .requiresTool()
+                .strength(0.8f));
+    SMOOTH_QUARTZ_ELEVATOR =
+        register(
+            SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER,
+            QuartzElevatorBlock::new,
+            AbstractBlock.Settings.create()
+                .mapColor(MapColor.OFF_WHITE)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .requiresTool()
+                .strength(2.0f, 6.0f));
+  }
 }

@@ -10,14 +10,15 @@ import atonkish.quartzelv.gametest.testcase.TeleportTests;
 import atonkish.quartzelv.gametest.util.TestFunction;
 
 public class QuartzElevatorModGameTest {
-    public static final Collection<TestFunction> TEST_FUNCTIONS = new ArrayList<>() {
+  public static final Collection<TestFunction> TEST_FUNCTIONS =
+      new ArrayList<>() {
         {
-            if (System.getProperty(QuartzElevatorModGameTest.class.getPackageName()) != null) {
-                addAll(AdvancementTests.TEST_FUNCTIONS);
-                addAll(LootTableTests.TEST_FUNCTIONS);
-                addAll(RecipeTests.TEST_FUNCTIONS);
-                addAll(TeleportTests.TEST_FUNCTIONS);
-            }
+          if (System.getProperty(QuartzElevatorModGameTest.class.getPackageName()) != null) {
+            addAll(AdvancementTests.TEST_FUNCTIONS);
+            addAll(LootTableTests.TEST_FUNCTIONS);
+            addAll(RecipeTests.TEST_FUNCTIONS);
+            addAll(TeleportTests.TEST_FUNCTIONS);
+          }
         }
-    };
+      };
 }
