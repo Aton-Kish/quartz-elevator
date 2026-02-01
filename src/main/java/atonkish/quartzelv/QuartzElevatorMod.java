@@ -28,48 +28,52 @@ import atonkish.quartzelv.item.ModItemGroups;
 import atonkish.quartzelv.item.ModItems;
 
 public class QuartzElevatorMod implements ModInitializer {
-	public static final String MOD_ID = "quartzelv";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static QuartzElevatorConfig CONFIG;
+  public static final String MOD_ID = "quartzelv";
+  public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+  public static QuartzElevatorConfig CONFIG;
 
-	@Override
-	public void onInitialize() {
-		// Blocks
-		ModBlocks.init();
+  @Override
+  public void onInitialize() {
+    // Blocks
+    ModBlocks.init();
 
-		// Items
-		ModItemGroups.init();
-		ModItems.init();
+    // Items
+    ModItemGroups.init();
+    ModItems.init();
 
-		// Auto Config
-		AutoConfig.register(QuartzElevatorConfig.class, GsonConfigSerializer::new);
-		CONFIG = AutoConfig.getConfigHolder(QuartzElevatorConfig.class).getConfig();
+    // Auto Config
+    AutoConfig.register(QuartzElevatorConfig.class, GsonConfigSerializer::new);
+    CONFIG = AutoConfig.getConfigHolder(QuartzElevatorConfig.class).getConfig();
 
-		// Game Tests
-		this.onInitializeGameTest();
-	}
+    // Game Tests
+    this.onInitializeGameTest();
+  }
 
-	private void onInitializeGameTest() {
-		for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
-			LOGGER.debug("Registering test function: {}", testFunction.identifier());
-			Registry.register(Registries.TEST_FUNCTION, testFunction.identifier(), testFunction.testFunction());
-		}
-	}
+  private void onInitializeGameTest() {
+    for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
+      LOGGER.debug("Registering test function: {}", testFunction.identifier());
+      Registry.register(
+          Registries.TEST_FUNCTION, testFunction.identifier(), testFunction.testFunction());
+    }
+  }
 
-	public static void registerDynamicEntries(List<RegistryLoader.Loader<?>> registriesList) {
-		Map<RegistryKey<? extends Registry<?>>, Registry<?>> registries = new IdentityHashMap<>(registriesList.size());
+  public static void registerDynamicEntries(List<RegistryLoader.Loader<?>> registriesList) {
+    Map<RegistryKey<? extends Registry<?>>, Registry<?>> registries =
+        new IdentityHashMap<>(registriesList.size());
 
-		for (RegistryLoader.Loader<?> entry : registriesList) {
-			registries.put(entry.registry().getKey(), entry.registry());
-		}
+    for (RegistryLoader.Loader<?> entry : registriesList) {
+      registries.put(entry.registry().getKey(), entry.registry());
+    }
 
-		Registry<TestInstance> testInstances = (Registry<TestInstance>) registries.get(RegistryKeys.TEST_INSTANCE);
-		Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition>) Objects
-				.requireNonNull(registries.get(RegistryKeys.TEST_ENVIRONMENT));
+    Registry<TestInstance> testInstances =
+        (Registry<TestInstance>) registries.get(RegistryKeys.TEST_INSTANCE);
+    Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry =
+        (Registry<TestEnvironmentDefinition>)
+            Objects.requireNonNull(registries.get(RegistryKeys.TEST_ENVIRONMENT));
 
-		for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
-			TestInstance testInstance = testFunction.testInstance(testEnvironmentDefinitionRegistry);
-			Registry.register(testInstances, testFunction.identifier(), testInstance);
-		}
-	}
+    for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
+      TestInstance testInstance = testFunction.testInstance(testEnvironmentDefinitionRegistry);
+      Registry.register(testInstances, testFunction.identifier(), testInstance);
+    }
+  }
 }

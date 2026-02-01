@@ -21,54 +21,58 @@ import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Shadow
-    public abstract Entity teleportTo(TeleportTarget teleportTarget);
+  @Shadow
+  public abstract Entity teleportTo(TeleportTarget teleportTarget);
 
-    @Shadow
-    public abstract Box getBoundingBox();
+  @Shadow
+  public abstract Box getBoundingBox();
 
-    @Shadow
-    public abstract BlockPos getBlockPos();
+  @Shadow
+  public abstract BlockPos getBlockPos();
 
-    @Shadow
-    public abstract double getX();
+  @Shadow
+  public abstract double getX();
 
-    @Shadow
-    public abstract double getZ();
+  @Shadow
+  public abstract double getZ();
 
-    @Shadow
-    public abstract float getYaw();
+  @Shadow
+  public abstract float getYaw();
 
-    @Shadow
-    public abstract float getPitch();
+  @Shadow
+  public abstract float getPitch();
 
-    @Shadow
-    public abstract World getEntityWorld();
+  @Shadow
+  public abstract World getEntityWorld();
 
-    @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
-    private void setSneaking(boolean sneaking, CallbackInfo info) {
-        if (!(this.getEntityWorld() instanceof ServerWorld)) {
-            return;
-        }
-
-        // `isPlayerOnly`: false -> all entities can teleport
-        // `isPlayerOnly`: true -> only player entities can teleport
-        if (QuartzElevatorMod.CONFIG.isPlayerOnly && !this.getClass().equals(ServerPlayerEntity.class)) {
-            return;
-        }
-
-        if (sneaking) {
-            VerticalTeleporter verticalTeleporter = (Double y) -> {
-                this.teleportTo(new TeleportTarget(
-                        (ServerWorld) this.getEntityWorld(),
-                        new Vec3d(this.getX(), y, this.getZ()),
-                        Vec3d.ZERO,
-                        this.getYaw(),
-                        this.getPitch(),
-                        TeleportTarget.NO_OP));
-                return (Void) null;
-            };
-            Teleport.teleportDown(this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
-        }
+  @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
+  private void setSneaking(boolean sneaking, CallbackInfo info) {
+    if (!(this.getEntityWorld() instanceof ServerWorld)) {
+      return;
     }
+
+    // `isPlayerOnly`: false -> all entities can teleport
+    // `isPlayerOnly`: true -> only player entities can teleport
+    if (QuartzElevatorMod.CONFIG.isPlayerOnly
+        && !this.getClass().equals(ServerPlayerEntity.class)) {
+      return;
+    }
+
+    if (sneaking) {
+      VerticalTeleporter verticalTeleporter =
+          (Double y) -> {
+            this.teleportTo(
+                new TeleportTarget(
+                    (ServerWorld) this.getEntityWorld(),
+                    new Vec3d(this.getX(), y, this.getZ()),
+                    Vec3d.ZERO,
+                    this.getYaw(),
+                    this.getPitch(),
+                    TeleportTarget.NO_OP));
+            return (Void) null;
+          };
+      Teleport.teleportDown(
+          this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+    }
+  }
 }

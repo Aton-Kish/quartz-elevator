@@ -16,28 +16,34 @@ import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 
 public class ModItemGroups {
-    public static final RegistryKey<ItemGroup> QUARTZ_ELEVATOR;
+  public static final RegistryKey<ItemGroup> QUARTZ_ELEVATOR;
 
-    public static void init() {
-        Registry.register(Registries.ITEM_GROUP, ModItemGroups.QUARTZ_ELEVATOR, FabricItemGroup
-                .builder()
-                .displayName(Text.translatable(String.format("itemGroup.%s.%s", QuartzElevatorMod.MOD_ID,
+  public static void init() {
+    Registry.register(
+        Registries.ITEM_GROUP,
+        ModItemGroups.QUARTZ_ELEVATOR,
+        FabricItemGroup.builder()
+            .displayName(
+                Text.translatable(
+                    String.format(
+                        "itemGroup.%s.%s",
+                        QuartzElevatorMod.MOD_ID,
                         ModItemGroups.QUARTZ_ELEVATOR.getValue().getPath())))
-                .icon(() -> new ItemStack(ModBlocks.QUARTZ_ELEVATOR_BLOCK))
-                .build());
-        ItemGroupEvents
-                .modifyEntriesEvent(ModItemGroups.QUARTZ_ELEVATOR)
-                .register(content -> {
-                    content.add(ModBlocks.QUARTZ_ELEVATOR_BLOCK);
-                    content.add(ModBlocks.SMOOTH_QUARTZ_ELEVATOR);
-                });
-    }
+            .icon(() -> new ItemStack(ModBlocks.QUARTZ_ELEVATOR_BLOCK))
+            .build());
+    ItemGroupEvents.modifyEntriesEvent(ModItemGroups.QUARTZ_ELEVATOR)
+        .register(
+            content -> {
+              content.add(ModBlocks.QUARTZ_ELEVATOR_BLOCK);
+              content.add(ModBlocks.SMOOTH_QUARTZ_ELEVATOR);
+            });
+  }
 
-    private static RegistryKey<ItemGroup> register(String id) {
-        return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(QuartzElevatorMod.MOD_ID, id));
-    }
+  private static RegistryKey<ItemGroup> register(String id) {
+    return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(QuartzElevatorMod.MOD_ID, id));
+  }
 
-    static {
-        QUARTZ_ELEVATOR = ModItemGroups.register("quartz_elevator");
-    }
+  static {
+    QUARTZ_ELEVATOR = ModItemGroups.register("quartz_elevator");
+  }
 }

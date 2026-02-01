@@ -1,6 +1,8 @@
 plugins {
 	id "net.fabricmc.fabric-loom-remap" version "${loom_version}"
 	id "maven-publish"
+	id 'checkstyle'
+	id "com.diffplug.spotless" version "8.2.1"
 	id "com.modrinth.minotaur" version "2.+"
 }
 
@@ -127,6 +129,44 @@ publishing {
 	}
 }
 
+checkstyle {
+	toolVersion = "13.0.0"
+	configFile = file("${rootProject.projectDir}/checkstyle.xml")
+
+	configProperties = [
+		'org.checkstyle.google.severity': 'error'
+	]
+}
+
+spotless {
+	format 'misc', {
+		target '*.gradle', 'gradle.properties'
+
+		trimTrailingWhitespace()
+		leadingSpacesToTabs()
+		endWithNewline()
+	}
+
+	java {
+		googleJavaFormat()
+		importOrder(
+			'java',
+			'javax',
+			'org.slf4j',
+			'com.mojang',
+			'net.minecraft',
+			'net.fabricmc',
+			'org.spongepowered',
+			'',
+			'atonkish'
+		)
+		removeUnusedImports()
+		formatAnnotations()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}
+
 task curseforge(type: Exec) {
 	environment "CURSEFORGE_API_TOKEN", project.findProperty("curseforge_token") ?: "Missing token"
 	commandLine "sh", "-c", """
@@ -139,17 +179,17 @@ task curseforge(type: Exec) {
 
 		# release
 		./mcmod-releaser curseforge \
-		    --file "build/libs/${project.archives_base_name}-${project.version}.jar" \
-		    --project-id "${project.curseforge_id}" \
-		    --release-type "release" \
-		    --version "${project.version}" \
-		    --name "Quartz Elevator v${project.version}" \
-		    --changelog "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v${java.net.URLEncoder.encode(project.version, "UTF-8")})" \
-		    --environments "Client,Server" \
-		    --loaders "Fabric" \
-		    --java-versions "Java 21" \
-		    --game-versions "1.21.9,1.21.10,1.21.11" \
-		    --dependencies "fabric-api=required,cloth-config=embedded,modmenu=optional"
+			--file "build/libs/${project.archives_base_name}-${project.version}.jar" \
+			--project-id "${project.curseforge_id}" \
+			--release-type "release" \
+			--version "${project.version}" \
+			--name "Quartz Elevator v${project.version}" \
+			--changelog "[v${project.version}](https://github.com/Aton-Kish/quartz-elevator/releases/tag/v${java.net.URLEncoder.encode(project.version, "UTF-8")})" \
+			--environments "Client,Server" \
+			--loaders "Fabric" \
+			--java-versions "Java 21" \
+			--game-versions "1.21.9,1.21.10,1.21.11" \
+			--dependencies "fabric-api=required,cloth-config=embedded,modmenu=optional"
 	"""
 }
 
