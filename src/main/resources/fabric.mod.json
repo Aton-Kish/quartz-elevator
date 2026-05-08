@@ -23,12 +23,12 @@
     "modmenu": ["atonkish.quartzelv.integration.modmenu.ModMenu"]
   },
   "mixins": ["quartzelv.mixins.json"],
-  "accessWidener": "quartzelv.accesswidener",
+  "accessWidener": "quartzelv.classtweaker",
 
   "depends": {
-    "fabricloader": ">=0.17.2",
-    "minecraft": "~1.21.9",
-    "java": ">=21",
+    "fabricloader": ">=0.19.2",
+    "minecraft": "~26.1",
+    "java": ">=25",
     "fabric-api": "*"
   },
   "suggests": {

@@ -9,14 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     env:
-      JAVA_VERSION: "21"
+      JAVA_VERSION: "25"
     steps:
       - name: checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v4
+        uses: gradle/actions/wrapper-validation@v6
       - name: setup jdk ${{ env.JAVA_VERSION }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "microsoft"
@@ -25,12 +25,12 @@ jobs:
       - name: build
         run: ./gradlew runServerTest build
       - name: capture build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Artifacts
           path: build/libs/
       - name: publish test report
-        uses: mikepenz/action-junit-report@v4
+        uses: mikepenz/action-junit-report@v6
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: build/gametest/junit.xml
