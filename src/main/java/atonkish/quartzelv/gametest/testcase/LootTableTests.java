@@ -3,23 +3,21 @@ package atonkish.quartzelv.gametest.testcase;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameMode;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.phys.Vec3;
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
@@ -88,33 +86,33 @@ public class LootTableTests {
         1000,
         0,
         true,
-        BlockRotation.NONE,
+        Rotation.NONE,
         false,
         1,
         1,
         false,
         (context) -> {
           // Arrange
-          BlockPos blockPos = BlockPos.ORIGIN;
-          context.setBlockState(blockPos, elevatorBlock);
+          BlockPos blockPos = BlockPos.ZERO;
+          context.setBlock(blockPos, elevatorBlock);
 
-          ServerPlayerEntity player =
-              MockServerPlayerHelper.spawn(context, GameMode.SURVIVAL, Vec3d.of(blockPos.south(4)));
-          player.setStackInHand(Hand.MAIN_HAND, new ItemStack(tool));
+          ServerPlayer player =
+              MockServerPlayerHelper.spawn(context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos.south(4)));
+          player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(tool));
 
           // Act
           CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();
           CompletableFuture<Void> futurePartialAct2 = new CompletableFuture<>();
 
           long tickOrigin = 0;
-          context.runAtTick(
+          context.runAtTickTime(
               tickOrigin,
               () -> {
-                player.interactionManager.processBlockBreakingAction(
-                    context.getAbsolutePos(blockPos),
-                    PlayerActionC2SPacket.Action.START_DESTROY_BLOCK,
+                player.gameMode.handleBlockBreakAction(
+                    context.absolutePos(blockPos),
+                    ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
                     Direction.NORTH,
-                    context.getWorld().getHeight(),
+                    context.getLevel().getHeight(),
                     0);
 
                 futurePartialAct1.complete(null);
@@ -126,15 +124,15 @@ public class LootTableTests {
                       1.0D
                           / context
                               .getBlockState(blockPos)
-                              .calcBlockBreakingDelta(player, context.getWorld(), blockPos));
-          context.runAtTick(
+                              .getDestroyProgress(player, context.getLevel(), blockPos));
+          context.runAtTickTime(
               tickBlockBreaking,
               () -> {
-                player.interactionManager.processBlockBreakingAction(
-                    context.getAbsolutePos(blockPos),
-                    PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK,
+                player.gameMode.handleBlockBreakAction(
+                    context.absolutePos(blockPos),
+                    ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK,
                     Direction.NORTH,
-                    context.getWorld().getHeight(),
+                    context.getLevel().getHeight(),
                     0);
 
                 futurePartialAct2.complete(null);
@@ -152,8 +150,8 @@ public class LootTableTests {
               .thenRun(
                   () -> {
                     try {
-                      context.expectBlock(Blocks.AIR, blockPos);
-                      context.expectEntitiesAround(
+                      context.assertBlockPresent(Blocks.AIR, blockPos);
+                      context.assertEntitiesPresent(
                           EntityType.ITEM, blockPos, shouldDrop ? 1 : 0, 1);
                     } catch (Exception e) {
                       QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
@@ -162,7 +160,7 @@ public class LootTableTests {
                       MockServerPlayerHelper.destroy(context, player);
                     }
 
-                    context.complete();
+                    context.succeed();
                   });
         });
   }

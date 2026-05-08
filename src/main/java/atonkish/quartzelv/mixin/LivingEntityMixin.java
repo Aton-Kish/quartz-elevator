@@ -1,14 +1,5 @@
 package atonkish.quartzelv.mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.TeleportTarget;
-import net.minecraft.world.World;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,39 +8,47 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.util.Teleport;
 import atonkish.quartzelv.util.VerticalTeleporter;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.Vec3;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-  public LivingEntityMixin(EntityType<?> type, World world) {
+  public LivingEntityMixin(EntityType<?> type, Level world) {
     super(type, world);
   }
 
-  @Inject(at = @At("HEAD"), method = "jump", cancellable = true)
+  @Inject(at = @At("HEAD"), method = "jumpFromGround", cancellable = true)
   private void jump(CallbackInfo info) {
-    if (!(this.getEntityWorld() instanceof ServerWorld)) {
+    if (!(this.level() instanceof ServerLevel)) {
       return;
     }
 
     // `isPlayerOnly`: false -> all entities can teleport
     // `isPlayerOnly`: true -> only player entities can teleport
     if (QuartzElevatorMod.CONFIG.isPlayerOnly
-        && !this.getClass().equals(ServerPlayerEntity.class)) {
+        && !this.getClass().equals(ServerPlayer.class)) {
       return;
     }
 
     VerticalTeleporter verticalTeleporter =
         (Double y) -> {
-          this.teleportTo(
-              new TeleportTarget(
-                  (ServerWorld) this.getEntityWorld(),
-                  new Vec3d(this.getX(), y, this.getZ()),
-                  Vec3d.ZERO,
-                  this.getYaw(),
-                  this.getPitch(),
-                  TeleportTarget.NO_OP));
+          this.teleport(
+              new TeleportTransition(
+                  (ServerLevel) this.level(),
+                  new Vec3(this.getX(), y, this.getZ()),
+                  Vec3.ZERO,
+                  this.getYRot(),
+                  this.getXRot(),
+                  TeleportTransition.DO_NOTHING));
           return (Void) null;
         };
     Teleport.teleportUp(
-        this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+        this.level(), this.blockPosition(), this.getBoundingBox(), verticalTeleporter);
   }
 }

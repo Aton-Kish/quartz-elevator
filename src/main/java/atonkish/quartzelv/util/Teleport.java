@@ -1,53 +1,52 @@
 package atonkish.quartzelv.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
-
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.block.QuartzElevatorBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 
 public class Teleport {
   public static void teleportUp(
-      World world, BlockPos blockPos, Box box, VerticalTeleporter verticalTeleporter) {
-    Box relativeBox = Teleport.getRelativeBox(blockPos, box);
+      Level world, BlockPos blockPos, AABB box, VerticalTeleporter verticalTeleporter) {
+    AABB relativeBox = Teleport.getRelativeBox(blockPos, box);
 
-    Block srcBlock = world.getBlockState(blockPos.down()).getBlock();
-    Identifier srcIdentifier = Registries.BLOCK.getId(srcBlock);
+    Block srcBlock = world.getBlockState(blockPos.below()).getBlock();
+    Identifier srcIdentifier = BuiltInRegistries.BLOCK.getKey(srcBlock);
 
     if (srcBlock instanceof QuartzElevatorBlock
         && QuartzElevatorBlock.isTeleportable(world, blockPos, relativeBox)) {
-      int bottomY = blockPos.down().getY();
+      int bottomY = blockPos.below().getY();
       int maxDistance =
           srcIdentifier.equals(ModBlocks.QUARTZ_ELEVATOR_BLOCK_IDENTIFIER)
               ? QuartzElevatorMod.CONFIG.quartzElevatorDistance
               : QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance;
 
-      for (; blockPos.getY() < bottomY + maxDistance; blockPos = blockPos.up()) {
-        if (blockPos.getY() >= world.getTopYInclusive()) {
+      for (; blockPos.getY() < bottomY + maxDistance; blockPos = blockPos.above()) {
+        if (blockPos.getY() >= world.getMaxY()) {
           break;
         }
 
-        Block dstBlock = world.getBlockState(blockPos.up()).getBlock();
-        Identifier dstIdentifier = Registries.BLOCK.getId(dstBlock);
+        Block dstBlock = world.getBlockState(blockPos.above()).getBlock();
+        Identifier dstIdentifier = BuiltInRegistries.BLOCK.getKey(dstBlock);
 
-        BlockPos pos = blockPos.up(2);
+        BlockPos pos = blockPos.above(2);
 
         if (Teleport.equalsElevatorType(srcIdentifier, dstIdentifier)
             && QuartzElevatorBlock.isTeleportable(world, pos, relativeBox)) {
           verticalTeleporter.teleportY((double) pos.getY());
           world.playSound(
-              (PlayerEntity) null,
+              (Player) null,
               pos,
-              SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-              SoundCategory.BLOCKS,
+              SoundEvents.ENDERMAN_TELEPORT,
+              SoundSource.BLOCKS,
               1.0F,
               1.0F);
           break;
@@ -57,15 +56,15 @@ public class Teleport {
   }
 
   public static void teleportDown(
-      World world, BlockPos blockPos, Box box, VerticalTeleporter verticalTeleporter) {
-    Box relativeBox = Teleport.getRelativeBox(blockPos, box);
+      Level world, BlockPos blockPos, AABB box, VerticalTeleporter verticalTeleporter) {
+    AABB relativeBox = Teleport.getRelativeBox(blockPos, box);
 
-    Block srcBlock = world.getBlockState(blockPos.down()).getBlock();
-    Identifier srcIdentifier = Registries.BLOCK.getId(srcBlock);
+    Block srcBlock = world.getBlockState(blockPos.below()).getBlock();
+    Identifier srcIdentifier = BuiltInRegistries.BLOCK.getKey(srcBlock);
 
     if (srcBlock instanceof QuartzElevatorBlock
         && QuartzElevatorBlock.isTeleportable(world, blockPos, relativeBox)) {
-      blockPos = blockPos.down();
+      blockPos = blockPos.below();
 
       int topY = blockPos.getY();
       int maxDistance =
@@ -73,13 +72,13 @@ public class Teleport {
               ? QuartzElevatorMod.CONFIG.quartzElevatorDistance
               : QuartzElevatorMod.CONFIG.smoothQuartzElevatorDistance;
 
-      for (; blockPos.getY() > topY - maxDistance; blockPos = blockPos.down()) {
-        if (blockPos.getY() <= world.getBottomY()) {
+      for (; blockPos.getY() > topY - maxDistance; blockPos = blockPos.below()) {
+        if (blockPos.getY() <= world.getMinY()) {
           break;
         }
 
-        Block dstBlock = world.getBlockState(blockPos.down()).getBlock();
-        Identifier dstIdentifier = Registries.BLOCK.getId(dstBlock);
+        Block dstBlock = world.getBlockState(blockPos.below()).getBlock();
+        Identifier dstIdentifier = BuiltInRegistries.BLOCK.getKey(dstBlock);
 
         BlockPos pos = blockPos;
 
@@ -87,10 +86,10 @@ public class Teleport {
             && QuartzElevatorBlock.isTeleportable(world, pos, relativeBox)) {
           verticalTeleporter.teleportY((double) pos.getY());
           world.playSound(
-              (PlayerEntity) null,
+              (Player) null,
               pos,
-              SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-              SoundCategory.BLOCKS,
+              SoundEvents.ENDERMAN_TELEPORT,
+              SoundSource.BLOCKS,
               1.0F,
               1.0F);
           break;
@@ -99,7 +98,7 @@ public class Teleport {
     }
   }
 
-  private static Box getRelativeBox(BlockPos blockPos, Box entityBox) {
+  private static AABB getRelativeBox(BlockPos blockPos, AABB entityBox) {
     int posX = blockPos.getX();
     int posZ = blockPos.getZ();
 
@@ -112,7 +111,7 @@ public class Teleport {
     double z1 = entityBox.minZ - posZ;
     double z2 = entityBox.maxZ - posZ;
 
-    return new Box(x1, y1, z1, x2, y2, z2);
+    return new AABB(x1, y1, z1, x2, y2, z2);
   }
 
   private static boolean equalsElevatorType(Identifier id1, Identifier id2) {

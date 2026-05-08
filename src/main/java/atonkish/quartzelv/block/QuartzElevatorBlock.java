@@ -1,28 +1,27 @@
 package atonkish.quartzelv.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
-
 import atonkish.quartzelv.QuartzElevatorMod;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class QuartzElevatorBlock extends Block {
-  public QuartzElevatorBlock(Settings settings) {
+  public QuartzElevatorBlock(Properties settings) {
     super(settings);
   }
 
-  public static boolean isTeleportable(World world, BlockPos blockPos, Box entityBox) {
-    VoxelShape shape = world.getBlockState(blockPos).getCollisionShape(world, blockPos.up(2));
-    return shape.isEmpty() || !entityBox.intersects(shape.getBoundingBox());
+  public static boolean isTeleportable(Level world, BlockPos blockPos, AABB entityBox) {
+    VoxelShape shape = world.getBlockState(blockPos).getCollisionShape(world, blockPos.above(2));
+    return shape.isEmpty() || !entityBox.intersects(shape.bounds());
   }
 
   @Override
-  public void randomDisplayTick(BlockState state, World world, BlockPos blockPos, Random random) {
+  public void animateTick(BlockState state, Level world, BlockPos blockPos, RandomSource random) {
     if (!QuartzElevatorMod.CONFIG.displayParticles) {
       return;
     }
@@ -34,7 +33,7 @@ public class QuartzElevatorBlock extends Block {
       double g = 0.0D;
       double h = random.nextDouble() * 0.0625D;
       double l = 0.0D;
-      world.addParticleClient(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
+      world.addParticle(ParticleTypes.REVERSE_PORTAL, d, e, f, g, h, l);
     }
   }
 }

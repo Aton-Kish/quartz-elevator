@@ -1,14 +1,5 @@
 package atonkish.quartzelv.mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.TeleportTarget;
-import net.minecraft.world.World;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,17 +9,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.util.Teleport;
 import atonkish.quartzelv.util.VerticalTeleporter;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
   @Shadow
-  public abstract Entity teleportTo(TeleportTarget teleportTarget);
+  public abstract Entity teleport(TeleportTransition teleportTarget);
 
   @Shadow
-  public abstract Box getBoundingBox();
+  public abstract AABB getBoundingBox();
 
   @Shadow
-  public abstract BlockPos getBlockPos();
+  public abstract BlockPos blockPosition();
 
   @Shadow
   public abstract double getX();
@@ -37,42 +36,42 @@ public abstract class EntityMixin {
   public abstract double getZ();
 
   @Shadow
-  public abstract float getYaw();
+  public abstract float getYRot();
 
   @Shadow
-  public abstract float getPitch();
+  public abstract float getXRot();
 
   @Shadow
-  public abstract World getEntityWorld();
+  public abstract Level level();
 
-  @Inject(at = @At("HEAD"), method = "setSneaking", cancellable = true)
+  @Inject(at = @At("HEAD"), method = "setShiftKeyDown", cancellable = true)
   private void setSneaking(boolean sneaking, CallbackInfo info) {
-    if (!(this.getEntityWorld() instanceof ServerWorld)) {
+    if (!(this.level() instanceof ServerLevel)) {
       return;
     }
 
     // `isPlayerOnly`: false -> all entities can teleport
     // `isPlayerOnly`: true -> only player entities can teleport
     if (QuartzElevatorMod.CONFIG.isPlayerOnly
-        && !this.getClass().equals(ServerPlayerEntity.class)) {
+        && !this.getClass().equals(ServerPlayer.class)) {
       return;
     }
 
     if (sneaking) {
       VerticalTeleporter verticalTeleporter =
           (Double y) -> {
-            this.teleportTo(
-                new TeleportTarget(
-                    (ServerWorld) this.getEntityWorld(),
-                    new Vec3d(this.getX(), y, this.getZ()),
-                    Vec3d.ZERO,
-                    this.getYaw(),
-                    this.getPitch(),
-                    TeleportTarget.NO_OP));
+            this.teleport(
+                new TeleportTransition(
+                    (ServerLevel) this.level(),
+                    new Vec3(this.getX(), y, this.getZ()),
+                    Vec3.ZERO,
+                    this.getYRot(),
+                    this.getXRot(),
+                    TeleportTransition.DO_NOTHING));
             return (Void) null;
           };
       Teleport.teleportDown(
-          this.getEntityWorld(), this.getBlockPos(), this.getBoundingBox(), verticalTeleporter);
+          this.level(), this.blockPosition(), this.getBoundingBox(), verticalTeleporter);
     }
   }
 }

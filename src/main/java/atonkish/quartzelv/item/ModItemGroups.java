@@ -1,46 +1,44 @@
 package atonkish.quartzelv.item;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 
 public class ModItemGroups {
-  public static final RegistryKey<ItemGroup> QUARTZ_ELEVATOR;
+  public static final ResourceKey<CreativeModeTab> QUARTZ_ELEVATOR;
 
   public static void init() {
     Registry.register(
-        Registries.ITEM_GROUP,
+        BuiltInRegistries.CREATIVE_MODE_TAB,
         ModItemGroups.QUARTZ_ELEVATOR,
         FabricItemGroup.builder()
-            .displayName(
-                Text.translatable(
+            .title(
+                Component.translatable(
                     String.format(
                         "itemGroup.%s.%s",
                         QuartzElevatorMod.MOD_ID,
-                        ModItemGroups.QUARTZ_ELEVATOR.getValue().getPath())))
+                        ModItemGroups.QUARTZ_ELEVATOR.identifier().getPath())))
             .icon(() -> new ItemStack(ModBlocks.QUARTZ_ELEVATOR_BLOCK))
             .build());
     ItemGroupEvents.modifyEntriesEvent(ModItemGroups.QUARTZ_ELEVATOR)
         .register(
             content -> {
-              content.add(ModBlocks.QUARTZ_ELEVATOR_BLOCK);
-              content.add(ModBlocks.SMOOTH_QUARTZ_ELEVATOR);
+              content.accept(ModBlocks.QUARTZ_ELEVATOR_BLOCK);
+              content.accept(ModBlocks.SMOOTH_QUARTZ_ELEVATOR);
             });
   }
 
-  private static RegistryKey<ItemGroup> register(String id) {
-    return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(QuartzElevatorMod.MOD_ID, id));
+  private static ResourceKey<CreativeModeTab> register(String id) {
+    return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(QuartzElevatorMod.MOD_ID, id));
   }
 
   static {

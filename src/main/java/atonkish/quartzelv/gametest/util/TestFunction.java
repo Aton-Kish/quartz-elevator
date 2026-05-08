@@ -1,18 +1,17 @@
 package atonkish.quartzelv.gametest.util;
 
 import java.util.function.Consumer;
-
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.test.FunctionTestInstance;
-import net.minecraft.test.TestContext;
-import net.minecraft.test.TestData;
-import net.minecraft.test.TestEnvironmentDefinition;
-import net.minecraft.test.TestInstance;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.FunctionGameTestInstance;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.gametest.framework.GameTestInstance;
+import net.minecraft.gametest.framework.TestData;
+import net.minecraft.gametest.framework.TestEnvironmentDefinition;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.Rotation;
 
 public record TestFunction(
     Identifier identifier,
@@ -21,21 +20,21 @@ public record TestFunction(
     int maxTicks,
     int setupTicks,
     boolean required,
-    BlockRotation rotation,
+    Rotation rotation,
     boolean manualOnly,
     int maxAttempts,
     int requiredSuccesses,
     boolean skyAccess,
-    Consumer<TestContext> testFunction) {
-  public TestData<RegistryEntry<TestEnvironmentDefinition>> testData(
+    Consumer<GameTestHelper> testFunction) {
+  public TestData<Holder<TestEnvironmentDefinition>> testData(
       Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry) {
-    RegistryEntry<TestEnvironmentDefinition> testEnvironment =
+    Holder<TestEnvironmentDefinition> testEnvironment =
         testEnvironmentDefinitionRegistry.getOrThrow(
-            RegistryKey.of(RegistryKeys.TEST_ENVIRONMENT, Identifier.of(this.environment())));
+            ResourceKey.create(Registries.TEST_ENVIRONMENT, Identifier.parse(this.environment())));
 
     return new TestData<>(
         testEnvironment,
-        Identifier.of(this.structure()),
+        Identifier.parse(this.structure()),
         this.maxTicks(),
         this.setupTicks(),
         this.required(),
@@ -46,10 +45,10 @@ public record TestFunction(
         this.skyAccess());
   }
 
-  public TestInstance testInstance(
+  public GameTestInstance testInstance(
       Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry) {
-    return new FunctionTestInstance(
-        RegistryKey.of(RegistryKeys.TEST_FUNCTION, this.identifier()),
+    return new FunctionGameTestInstance(
+        ResourceKey.create(Registries.TEST_FUNCTION, this.identifier()),
         this.testData(testEnvironmentDefinitionRegistry));
   }
 }

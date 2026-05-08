@@ -2,15 +2,13 @@ package atonkish.quartzelv.item;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import atonkish.quartzelv.block.ModBlocks;
 
 public class ModItems {
@@ -19,34 +17,34 @@ public class ModItems {
 
   public static void init() {}
 
-  private static RegistryKey<Item> keyOf(RegistryKey<Block> blockKey) {
-    return RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
+  private static ResourceKey<Item> keyOf(ResourceKey<Block> blockKey) {
+    return ResourceKey.create(Registries.ITEM, blockKey.identifier());
   }
 
   private static Item register(Block block) {
     return register(block, BlockItem::new);
   }
 
-  private static Item register(Block block, BiFunction<Block, Item.Settings, Item> factory) {
-    return register(block, factory, new Item.Settings());
+  private static Item register(Block block, BiFunction<Block, Item.Properties, Item> factory) {
+    return register(block, factory, new Item.Properties());
   }
 
   private static Item register(
-      Block block, BiFunction<Block, Item.Settings, Item> factory, Item.Settings settings) {
+      Block block, BiFunction<Block, Item.Properties, Item> factory, Item.Properties settings) {
     return register(
-        keyOf(block.getRegistryEntry().registryKey()),
+        keyOf(block.builtInRegistryHolder().key()),
         itemSettings -> (Item) factory.apply(block, itemSettings),
-        settings.useBlockPrefixedTranslationKey());
+        settings.useBlockDescriptionPrefix());
   }
 
   private static Item register(
-      RegistryKey<Item> key, Function<Item.Settings, Item> factory, Item.Settings settings) {
-    Item item = factory.apply(settings.registryKey(key));
+      ResourceKey<Item> key, Function<Item.Properties, Item> factory, Item.Properties settings) {
+    Item item = factory.apply(settings.setId(key));
     if (item instanceof BlockItem blockItem) {
-      blockItem.appendBlocks(Item.BLOCK_ITEMS, item);
+      blockItem.registerBlocks(Item.BY_BLOCK, item);
     }
 
-    return Registry.register(Registries.ITEM, key, item);
+    return Registry.register(BuiltInRegistries.ITEM, key, item);
   }
 
   static {

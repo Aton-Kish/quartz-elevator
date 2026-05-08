@@ -7,17 +7,14 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryLoader;
-import net.minecraft.test.TestEnvironmentDefinition;
-import net.minecraft.test.TestInstance;
-
 import net.fabricmc.api.ModInitializer;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.GameTestInstance;
+import net.minecraft.gametest.framework.TestEnvironmentDefinition;
+import net.minecraft.resources.RegistryDataLoader;
+import net.minecraft.resources.ResourceKey;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
@@ -53,26 +50,26 @@ public class QuartzElevatorMod implements ModInitializer {
     for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
       LOGGER.debug("Registering test function: {}", testFunction.identifier());
       Registry.register(
-          Registries.TEST_FUNCTION, testFunction.identifier(), testFunction.testFunction());
+          BuiltInRegistries.TEST_FUNCTION, testFunction.identifier(), testFunction.testFunction());
     }
   }
 
-  public static void registerDynamicEntries(List<RegistryLoader.Loader<?>> registriesList) {
-    Map<RegistryKey<? extends Registry<?>>, Registry<?>> registries =
+  public static void registerDynamicEntries(List<RegistryDataLoader.Loader<?>> registriesList) {
+    Map<ResourceKey<? extends Registry<?>>, Registry<?>> registries =
         new IdentityHashMap<>(registriesList.size());
 
-    for (RegistryLoader.Loader<?> entry : registriesList) {
-      registries.put(entry.registry().getKey(), entry.registry());
+    for (RegistryDataLoader.Loader<?> entry : registriesList) {
+      registries.put(entry.registry().key(), entry.registry());
     }
 
-    Registry<TestInstance> testInstances =
-        (Registry<TestInstance>) registries.get(RegistryKeys.TEST_INSTANCE);
+    Registry<GameTestInstance> testInstances =
+        (Registry<GameTestInstance>) registries.get(Registries.TEST_INSTANCE);
     Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry =
         (Registry<TestEnvironmentDefinition>)
-            Objects.requireNonNull(registries.get(RegistryKeys.TEST_ENVIRONMENT));
+            Objects.requireNonNull(registries.get(Registries.TEST_ENVIRONMENT));
 
     for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {
-      TestInstance testInstance = testFunction.testInstance(testEnvironmentDefinitionRegistry);
+      GameTestInstance testInstance = testFunction.testInstance(testEnvironmentDefinitionRegistry);
       Registry.register(testInstances, testFunction.identifier(), testInstance);
     }
   }
