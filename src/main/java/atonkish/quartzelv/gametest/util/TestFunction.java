@@ -1,6 +1,7 @@
 package atonkish.quartzelv.gametest.util;
 
 import java.util.function.Consumer;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -25,10 +26,11 @@ public record TestFunction(
     int maxAttempts,
     int requiredSuccesses,
     boolean skyAccess,
+    int padding,
     Consumer<GameTestHelper> testFunction) {
-  public TestData<Holder<TestEnvironmentDefinition>> testData(
-      Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry) {
-    Holder<TestEnvironmentDefinition> testEnvironment =
+  public TestData<Holder<TestEnvironmentDefinition<?>>> testData(
+      Registry<TestEnvironmentDefinition<?>> testEnvironmentDefinitionRegistry) {
+    Holder<TestEnvironmentDefinition<?>> testEnvironment =
         testEnvironmentDefinitionRegistry.getOrThrow(
             ResourceKey.create(Registries.TEST_ENVIRONMENT, Identifier.parse(this.environment())));
 
@@ -42,11 +44,12 @@ public record TestFunction(
         this.manualOnly(),
         this.maxAttempts(),
         this.requiredSuccesses(),
-        this.skyAccess());
+        this.skyAccess(),
+        this.padding());
   }
 
   public GameTestInstance testInstance(
-      Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry) {
+      Registry<TestEnvironmentDefinition<?>> testEnvironmentDefinitionRegistry) {
     return new FunctionGameTestInstance(
         ResourceKey.create(Registries.TEST_FUNCTION, this.identifier()),
         this.testData(testEnvironmentDefinitionRegistry));

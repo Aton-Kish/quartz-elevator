@@ -1,6 +1,7 @@
 package atonkish.quartzelv.gametest.util;
 
 import java.util.Locale;
+
 import net.minecraft.resources.Identifier;
 
 public class TestIdentifier {

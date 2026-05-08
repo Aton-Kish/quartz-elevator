@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
+
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
 import atonkish.quartzelv.gametest.util.TestFunction;
@@ -79,10 +81,12 @@ public class AdvancementTests {
         1,
         1,
         false,
+        1,
         (context) -> {
           // Arrange
           ServerPlayer player =
-              MockServerPlayerHelper.spawn(context, GameType.SURVIVAL, Vec3.atLowerCornerOf(BlockPos.ZERO));
+              MockServerPlayerHelper.spawn(
+                  context, GameType.SURVIVAL, Vec3.atLowerCornerOf(BlockPos.ZERO));
           AdvancementHolder entry =
               context.getLevel().getServer().getAdvancements().get(advancementId);
           AdvancementProgress progress = player.getAdvancements().getOrStartProgress(entry);

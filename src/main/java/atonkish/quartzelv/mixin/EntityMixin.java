@@ -1,5 +1,14 @@
 package atonkish.quartzelv.mixin;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,14 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.util.Teleport;
 import atonkish.quartzelv.util.VerticalTeleporter;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -35,9 +36,11 @@ public abstract class EntityMixin {
   @Shadow
   public abstract double getZ();
 
+  // CHECKSTYLE.SUPPRESS: AbbreviationAsWordInName for +2 lines
   @Shadow
   public abstract float getYRot();
 
+  // CHECKSTYLE.SUPPRESS: AbbreviationAsWordInName for +2 lines
   @Shadow
   public abstract float getXRot();
 
@@ -52,8 +55,7 @@ public abstract class EntityMixin {
 
     // `isPlayerOnly`: false -> all entities can teleport
     // `isPlayerOnly`: true -> only player entities can teleport
-    if (QuartzElevatorMod.CONFIG.isPlayerOnly
-        && !this.getClass().equals(ServerPlayer.class)) {
+    if (QuartzElevatorMod.CONFIG.isPlayerOnly && !this.getClass().equals(ServerPlayer.class)) {
       return;
     }
 

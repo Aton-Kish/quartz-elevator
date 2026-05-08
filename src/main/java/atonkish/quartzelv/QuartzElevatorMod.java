@@ -7,14 +7,17 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.fabricmc.api.ModInitializer;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
-import net.minecraft.resources.RegistryDataLoader;
+import net.minecraft.resources.RegistryLoadTask;
 import net.minecraft.resources.ResourceKey;
+
+import net.fabricmc.api.ModInitializer;
+
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
@@ -54,18 +57,18 @@ public class QuartzElevatorMod implements ModInitializer {
     }
   }
 
-  public static void registerDynamicEntries(List<RegistryDataLoader.Loader<?>> registriesList) {
+  public static void registerDynamicEntries(List<RegistryLoadTask<?>> loadTasks) {
     Map<ResourceKey<? extends Registry<?>>, Registry<?>> registries =
-        new IdentityHashMap<>(registriesList.size());
+        new IdentityHashMap<>(loadTasks.size());
 
-    for (RegistryDataLoader.Loader<?> entry : registriesList) {
-      registries.put(entry.registry().key(), entry.registry());
+    for (RegistryLoadTask<?> entry : loadTasks) {
+      registries.put(entry.registry.key(), entry.registry);
     }
 
     Registry<GameTestInstance> testInstances =
         (Registry<GameTestInstance>) registries.get(Registries.TEST_INSTANCE);
-    Registry<TestEnvironmentDefinition> testEnvironmentDefinitionRegistry =
-        (Registry<TestEnvironmentDefinition>)
+    Registry<TestEnvironmentDefinition<?>> testEnvironmentDefinitionRegistry =
+        (Registry<TestEnvironmentDefinition<?>>)
             Objects.requireNonNull(registries.get(Registries.TEST_ENVIRONMENT));
 
     for (TestFunction testFunction : QuartzElevatorModGameTest.TEST_FUNCTIONS) {

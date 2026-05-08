@@ -3,6 +3,7 @@ package atonkish.quartzelv.gametest.testcase;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
+
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
@@ -91,13 +93,15 @@ public class LootTableTests {
         1,
         1,
         false,
+        1,
         (context) -> {
           // Arrange
           BlockPos blockPos = BlockPos.ZERO;
           context.setBlock(blockPos, elevatorBlock);
 
           ServerPlayer player =
-              MockServerPlayerHelper.spawn(context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos.south(4)));
+              MockServerPlayerHelper.spawn(
+                  context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos.south(4)));
           player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(tool));
 
           // Act
@@ -143,7 +147,7 @@ public class LootTableTests {
               testIdentifier,
               elevatorBlock.getName().getString(),
               tickBlockBreaking,
-              tool.getName().getString());
+              tool.getName(new ItemStack(tool)).getString());
 
           // Assert
           CompletableFuture.allOf(futurePartialAct1, futurePartialAct2)

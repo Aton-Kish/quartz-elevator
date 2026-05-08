@@ -1,5 +1,4 @@
 classTweaker v1 official
 
 # for gametest
-accessible	class	net/minecraft/registry/RegistryLoader$Loader
-accessible	method	net/minecraft/entity/LivingEntity jump ()V
+accessible  field   net/minecraft/resources/RegistryLoadTask registry Lnet/minecraft/core/WritableRegistry;

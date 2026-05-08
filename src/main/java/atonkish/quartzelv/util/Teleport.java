@@ -1,8 +1,5 @@
 package atonkish.quartzelv.util;
 
-import atonkish.quartzelv.QuartzElevatorMod;
-import atonkish.quartzelv.block.ModBlocks;
-import atonkish.quartzelv.block.QuartzElevatorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -12,6 +9,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
+
+import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.block.ModBlocks;
+import atonkish.quartzelv.block.QuartzElevatorBlock;
 
 public class Teleport {
   public static void teleportUp(
@@ -43,12 +44,7 @@ public class Teleport {
             && QuartzElevatorBlock.isTeleportable(world, pos, relativeBox)) {
           verticalTeleporter.teleportY((double) pos.getY());
           world.playSound(
-              (Player) null,
-              pos,
-              SoundEvents.ENDERMAN_TELEPORT,
-              SoundSource.BLOCKS,
-              1.0F,
-              1.0F);
+              (Player) null, pos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0F, 1.0F);
           break;
         }
       }
@@ -86,12 +82,7 @@ public class Teleport {
             && QuartzElevatorBlock.isTeleportable(world, pos, relativeBox)) {
           verticalTeleporter.teleportY((double) pos.getY());
           world.playSound(
-              (Player) null,
-              pos,
-              SoundEvents.ENDERMAN_TELEPORT,
-              SoundSource.BLOCKS,
-              1.0F,
-              1.0F);
+              (Player) null, pos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0F, 1.0F);
           break;
         }
       }

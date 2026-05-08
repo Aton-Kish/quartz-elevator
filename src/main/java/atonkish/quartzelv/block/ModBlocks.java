@@ -1,6 +1,7 @@
 package atonkish.quartzelv.block;
 
 import java.util.function.Function;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+
 import atonkish.quartzelv.QuartzElevatorMod;
 
 public class ModBlocks {
@@ -41,7 +43,8 @@ public class ModBlocks {
   }
 
   static {
-    QUARTZ_ELEVATOR_BLOCK_IDENTIFIER = Identifier.fromNamespaceAndPath(QuartzElevatorMod.MOD_ID, "quartz_elevator");
+    QUARTZ_ELEVATOR_BLOCK_IDENTIFIER =
+        Identifier.fromNamespaceAndPath(QuartzElevatorMod.MOD_ID, "quartz_elevator");
     SMOOTH_QUARTZ_ELEVATOR_IDENTIFIER =
         Identifier.fromNamespaceAndPath(QuartzElevatorMod.MOD_ID, "smooth_quartz_elevator");
 

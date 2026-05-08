@@ -1,13 +1,5 @@
 package atonkish.quartzelv.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import atonkish.quartzelv.QuartzElevatorMod;
-import atonkish.quartzelv.util.Teleport;
-import atonkish.quartzelv.util.VerticalTeleporter;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +8,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import atonkish.quartzelv.QuartzElevatorMod;
+import atonkish.quartzelv.util.Teleport;
+import atonkish.quartzelv.util.VerticalTeleporter;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -31,8 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     // `isPlayerOnly`: false -> all entities can teleport
     // `isPlayerOnly`: true -> only player entities can teleport
-    if (QuartzElevatorMod.CONFIG.isPlayerOnly
-        && !this.getClass().equals(ServerPlayer.class)) {
+    if (QuartzElevatorMod.CONFIG.isPlayerOnly && !this.getClass().equals(ServerPlayer.class)) {
       return;
     }
 

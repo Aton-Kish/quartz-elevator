@@ -3,6 +3,7 @@ package atonkish.quartzelv.gametest.testcase;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
+
 import atonkish.quartzelv.QuartzElevatorMod;
 import atonkish.quartzelv.block.ModBlocks;
 import atonkish.quartzelv.gametest.util.MockServerPlayerHelper;
@@ -418,6 +420,7 @@ public class TeleportTests {
         1,
         1,
         false,
+        1,
         (context) -> {
           // Arrange
           TeleportTests.beforeTest(context, environment);
@@ -429,7 +432,8 @@ public class TeleportTests {
           context.setBlock(blockPos2, elevatorBlock2);
 
           ServerPlayer player =
-              MockServerPlayerHelper.spawn(context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos1.above(1)));
+              MockServerPlayerHelper.spawn(
+                  context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos1.above(1)));
 
           // Act
           CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();
@@ -495,6 +499,7 @@ public class TeleportTests {
         1,
         1,
         false,
+        1,
         (context) -> {
           // Arrange
           BlockPos blockPos1 = BlockPos.ZERO;
@@ -530,7 +535,8 @@ public class TeleportTests {
               .thenRun(
                   () -> {
                     try {
-                      context.assertEntityInstancePresent(mob, (shouldTeleport ? blockPos2 : blockPos1).above(1));
+                      context.assertEntityInstancePresent(
+                          mob, (shouldTeleport ? blockPos2 : blockPos1).above(1));
                     } catch (Exception e) {
                       QuartzElevatorMod.LOGGER.error("[{}] {}", testIdentifier, e.getMessage());
                       throw e;
@@ -565,6 +571,7 @@ public class TeleportTests {
         1,
         1,
         false,
+        1,
         (context) -> {
           // Arrange
           BlockPos blockPos1 = BlockPos.ZERO.above(distance);
@@ -574,7 +581,8 @@ public class TeleportTests {
           context.setBlock(blockPos2, elevatorBlock2);
 
           ServerPlayer player =
-              MockServerPlayerHelper.spawn(context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos1.above(1)));
+              MockServerPlayerHelper.spawn(
+                  context, GameType.SURVIVAL, Vec3.atLowerCornerOf(blockPos1.above(1)));
 
           // Act
           CompletableFuture<Void> futurePartialAct1 = new CompletableFuture<>();

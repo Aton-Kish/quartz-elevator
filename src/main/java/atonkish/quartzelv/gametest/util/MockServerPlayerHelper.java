@@ -2,6 +2,9 @@ package atonkish.quartzelv.gametest.util;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -10,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.CommonListenerCookie;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.authlib.GameProfile;
+
 import io.netty.channel.embedded.EmbeddedChannel;
 
 public class MockServerPlayerHelper {
@@ -45,7 +48,6 @@ public class MockServerPlayerHelper {
     player.connection.disconnect(
         Component.nullToEmpty(
             String.format(
-                "%s (%s) left the game",
-                player.getGameProfile().name(), player.getStringUUID())));
+                "%s (%s) left the game", player.getGameProfile().name(), player.getStringUUID())));
   }
 }
